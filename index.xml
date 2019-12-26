@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pray</title>
+    <link>http://hliblack.github.io/</link>
+    <description>Recent content on Pray</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 26 Dec 2019 17:07:27 +0800</lastBuildDate>
+    
+	<atom:link href="http://hliblack.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>About</title>
+      <link>http://hliblack.github.io/about/</link>
+      <pubDate>Thu, 26 Dec 2019 17:07:27 +0800</pubDate>
+      
+      <guid>http://hliblack.github.io/about/</guid>
+      <description>TEST about</description>
+    </item>
+    
+    <item>
+      <title>1</title>
+      <link>http://hliblack.github.io/2019/12/1-%E4%BD%BF%E7%94%A8ansible%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2sqlserver/</link>
+      <pubDate>Wed, 25 Dec 2019 17:37:15 +0800</pubDate>
+      
+      <guid>http://hliblack.github.io/2019/12/1-%E4%BD%BF%E7%94%A8ansible%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2sqlserver/</guid>
+      <description>使用ansible自动化部署SQLServer 前提条件   Windows2008 以下的操作系统需要先升级 Powershell; 远程连接到 Windows 服务器，以管理员权限运行 Powershell，执行以下命令：
+ $url = &amp;quot;https://raw.githubusercontent.com/jborean93/ansible-windows/master/scripts/Upgrade-PowerShell.ps1&amp;quot; $file = &amp;quot;$env:temp\Upgrade-PowerShell.ps1&amp;quot; $username = &amp;quot;Administrator&amp;quot; $password = &amp;quot;Password&amp;quot; (New-Object -TypeName System.Net.WebClient).DownloadFile($url, $file) Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Force # Version can be 3.0, 4.0 or 5.1 &amp;amp;$file -Version 5.1 -Username $username -Password $password -Verbose   完成升级后，还需要删除自动登录并将执行策略设置回默认值 Restricted：
+ # This isn&#39;t needed but is a good security practice to complete Set-ExecutionPolicy -ExecutionPolicy Restricted -Force $reg_winlogon_path = &amp;quot;HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon&amp;quot; Set-ItemProperty -Path $reg_winlogon_path -Name AutoAdminLogon -Value 0 Remove-ItemProperty -Path $reg_winlogon_path -Name DefaultUserName -ErrorAction SilentlyContinue Remove-ItemProperty -Path $reg_winlogon_path -Name DefaultPassword -ErrorAction SilentlyContinue   WinRM 设置，在受控端使用 powershell 运行以下命令：</description>
+    </item>
+    
+    <item>
+      <title>sample</title>
+      <link>http://hliblack.github.io/post/test/</link>
+      <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://hliblack.github.io/post/test/</guid>
+      <description>Hugo is the world&#39;s fastest static website engine. It&#39;s written in Go (aka Golang) and developed by bep, spf13 and friends.
+ Below you will find some of the most common and helpful pages from our documentation.
+ https://gohugo.io/documentation/</description>
+    </item>
+    
+    <item>
+      <title>test post</title>
+      <link>http://hliblack.github.io/post/test/</link>
+      <pubDate>Fri, 01 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://hliblack.github.io/post/test/</guid>
+      <description>echo &amp;#34;hello world !!&amp;#34; </description>
+    </item>
+    
+  </channel>
+</rss>

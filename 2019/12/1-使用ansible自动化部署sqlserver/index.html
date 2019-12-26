@@ -9,7 +9,7 @@
         rel="stylesheet" href="http://hliblack.github.io/css/github.css" />
     <meta name="viewport" content="width=device-width">
 
-    <title>About - Pray</title>
+    <title>1 - Pray</title>
 
     <link rel="icon" type="image/x-icon" class="js-site-favicon" href="http://hliblack.github.io/images/favicon.ico">
     <meta name="theme-color" content="#1e2327">
@@ -80,6 +80,157 @@ if (!doNotTrack) {
 </div>
 
   
+<div class="application-main " data-commit-hovercards-enabled="">
+    <div itemscope="" itemtype="http://schema.org/SoftwareSourceCode" class="">
+        <main id="js-repo-pjax-container" data-pjax-container="">
+            <div class="pagehead repohead instapaper_ignore readability-menu experiment-repo-nav pt-0 pt-lg-4 ">
+                <div class="repohead-details-container clearfix container-lg p-responsive d-none d-lg-block">
+                    <div class="mb-3 d-flex">
+                        <h1 class="public css-truncate float-none flex-auto width-fit pl-0">
+                            <a class="avatar mr-1" href="http://hliblack.github.io/about/">
+                            
+
+                                <img
+                                    src="https://i.postimg.cc/4x94fBYM/718-3.jpg" width="26" height="26">
+                            
+                            </a>
+                            <span class="author"><a
+                                    href="http://hliblack.github.io/">hliblack</a></span>
+                            <span class="path-divider">/</span>
+                            <strong itemprop="name" class="css-truncate-target" style="max-width: 410px"><a
+                                    href="http://hliblack.github.io/2019/12/1-%E4%BD%BF%E7%94%A8ansible%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2sqlserver/">1</a></strong>
+
+                            <div class="d-block text-small text-gray">
+                                Created <time-ago datetime="2019-12-25" class="no-wrap"
+                                    title="Created at 2019/12/25">
+                                    2019-12-25</time-ago>
+                                <span class="file-info-divider"></span>
+                                Modifyed <time-ago datetime="2019-12-25" class="no-wrap"
+                                    title="Modifyed  at 2019/12/25">
+                                    2019-12-25</time-ago>
+                            </div>
+                        </h1>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+            <div class="container-lg clearfix new-discussion-timeline experiment-repo-nav  p-responsive">
+                <div class="repository-content ">
+                    <div class="Box mt-3 position-relative">
+                        <div class="Box-header py-2 d-flex flex-column flex-shrink-0 flex-md-row flex-md-items-center">
+                            <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
+                                636 Words
+                                
+                            </div>
+                        </div>
+
+                        <div id="readme" class="Box-body readme blob instapaper_body js-code-block-container">
+                            <article class="markdown-body entry-content p-3 p-md-6" itemprop="text"><h1 id="ansiblesqlserver">使用ansible自动化部署SQLServer</h1>
+<h2 id="heading">前提条件</h2>
+<ol>
+<li>
+<p>Windows2008 以下的操作系统需要先升级 Powershell;
+远程连接到 Windows 服务器，以管理员权限运行 Powershell，执行以下命令：</p>
+<pre><code> $url = &quot;https://raw.githubusercontent.com/jborean93/ansible-windows/master/scripts/Upgrade-PowerShell.ps1&quot;
+ $file = &quot;$env:temp\Upgrade-PowerShell.ps1&quot;
+ $username = &quot;Administrator&quot;
+ $password = &quot;Password&quot;
+        
+ (New-Object -TypeName System.Net.WebClient).DownloadFile($url, $file)
+ Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Force
+        
+ # Version can be 3.0, 4.0 or 5.1
+ &amp;$file -Version 5.1 -Username $username -Password $password -Verbose
+</code></pre></li>
+<li>
+<p>完成升级后，还需要删除自动登录并将执行策略设置回默认值 Restricted：</p>
+<pre><code> # This isn't needed but is a good security practice to complete
+ Set-ExecutionPolicy -ExecutionPolicy Restricted -Force
+
+ $reg_winlogon_path = &quot;HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon&quot;
+ Set-ItemProperty -Path $reg_winlogon_path -Name AutoAdminLogon -Value 0
+ Remove-ItemProperty -Path $reg_winlogon_path -Name DefaultUserName -ErrorAction SilentlyContinue
+ Remove-ItemProperty -Path $reg_winlogon_path -Name DefaultPassword -ErrorAction SilentlyContinue
+</code></pre></li>
+<li>
+<p>WinRM 设置，在受控端使用 powershell 运行以下命令：</p>
+<pre><code> # This isn't needed but is a good security practice to complete
+ Set-ExecutionPolicy -ExecutionPolicy Restricted -Force
+
+ $reg_winlogon_path = &quot;HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon&quot;
+ Set-ItemProperty -Path $reg_winlogon_path -Name AutoAdminLogon -Value 0
+ Remove-ItemProperty -Path $reg_winlogon_path -Name DefaultUserName -ErrorAction SilentlyContinue
+ Remove-ItemProperty -Path $reg_winlogon_path -Name DefaultPassword -ErrorAction SilentlyContinue
+</code></pre><p>然后再执行：
+<code>set winrm/config/service '@{AllowUnencrypted</code>
+<code>winrm set winrm/config/service/auth '@{Basic=&quot;true&quot;}'</code></p>
+</li>
+<li>
+<p>在防火墙开放5985端口重新连接。</p>
+</li>
+</ol>
+<h2 id="heading-1">主控端设置</h2>
+<p>在 ansible 已安装的前提下，还需要安装 winrm 模块：
+<code>apt-get install libkrb5-dev</code>
+<code>pip install paramiko PyYAML Jinja2 httplib2 six</code>
+hosts 文件示例：</p>
+<blockquote>
+<p>[windows-server]
+40.121.233.233
+[windows-server:vars]
+ansible_ssh_user=”admin”
+ansible_ssh_pass=”123456”
+ansible_ssh_port=5985
+ansible_connection=”winrm”
+ansible_winrm_server_cert_validation=ignore</p>
+</blockquote>
+<h2 id="heading-2">正式安装</h2>
+<ol>
+<li>安装SQLServer运行所需要的组件，如：vc++运行库，jdk等；</li>
+<li>根据微软官方文档生成安装配置文件
+<ul>
+<li>下载解压安装包</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>在 cmd 中运行 SETUP.exe /UIMODE=Normal /ACTION=INSTALL</li>
+<li>得到安装配置文件后，修改：
+<ul>
+<li>注释 UIMode</li>
+<li>增加 IACCEPTSQLSERVERLICENSETERMS=”True”</li>
+<li>增加 SAPWD=”websoft9!”</li>
+<li>将 QUIET=”False” 改为 QUIET=”True”</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>编写 ansible 脚本
+脚本已上传 github ，链接为：https://github.com/Websoft9/ansible-sqlserver.git</li>
+</ol>
+</article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<div class="utterances"></div>
+<script src="https://utteranc.es/client.js"
+        repo="hliblack/hliblack.github.io"
+        issue-term="title"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
   <div class="footer container-lg width-full p-responsive" role="contentinfo">
     <div
         class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">

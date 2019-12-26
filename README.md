@@ -1,2 +1,0 @@
-# hliblack.github.io
-blog
