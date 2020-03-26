@@ -2,39 +2,39 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Pray</title>
-    <link>https://hliblack.github.com/</link>
+    <link>https://hliblack.github.io/</link>
     <description>Recent content on Pray</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Wed, 25 Mar 2020 17:20:50 +0800</lastBuildDate>
     
-	<atom:link href="https://hliblack.github.com/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://hliblack.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Ansible条件判断详解</title>
-      <link>https://hliblack.github.com/posts/ansible%E9%85%8D%E7%BD%AE/</link>
+      <link>https://hliblack.github.io/posts/ansible%E9%85%8D%E7%BD%AE/</link>
       <pubDate>Wed, 25 Mar 2020 17:20:50 +0800</pubDate>
       
-      <guid>https://hliblack.github.com/posts/ansible%E9%85%8D%E7%BD%AE/</guid>
+      <guid>https://hliblack.github.io/posts/ansible%E9%85%8D%E7%BD%AE/</guid>
       <description>Ansible条件判断详解 &amp;mdash;&amp;ndash;2019.05.25 1、when 条件判断 绝大多数语言中，都使用&amp;quot;if&amp;quot;作为条件判断的关键字，而在ansible中，条件判断的关键字是&amp;quot;when&amp;rdquo;，一个</description>
     </item>
     
     <item>
       <title>如何配置Ansible？Ansible三种配置方法详解</title>
-      <link>https://hliblack.github.com/posts/ansible%E9%85%8D%E7%BD%AE/</link>
+      <link>https://hliblack.github.io/posts/ansible%E9%85%8D%E7%BD%AE/</link>
       <pubDate>Thu, 19 Mar 2020 09:49:00 +0800</pubDate>
       
-      <guid>https://hliblack.github.com/posts/ansible%E9%85%8D%E7%BD%AE/</guid>
+      <guid>https://hliblack.github.io/posts/ansible%E9%85%8D%E7%BD%AE/</guid>
       <description>如何配置Ansible？Ansible三种配置方法详解 引用自：运维有道 2018.12.30 文章 如何配置Ansible？Ansible三种配置方法详解 前面我们学会了如何安装Ansible管理节点，这里我们来看看如何配置A</description>
     </item>
     
     <item>
       <title>Theme Preview</title>
-      <link>https://hliblack.github.com/posts/theme-preview/</link>
+      <link>https://hliblack.github.io/posts/theme-preview/</link>
       <pubDate>Wed, 11 Mar 2020 17:49:40 +0800</pubDate>
       
-      <guid>https://hliblack.github.com/posts/theme-preview/</guid>
+      <guid>https://hliblack.github.io/posts/theme-preview/</guid>
       <description>&lt;h1 id=&#34;headings&#34;&gt;Headings&lt;/h1&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-markdown&#34; data-lang=&#34;markdown&#34;&gt;# H1
 &lt;span style=&#34;color:#75715e&#34;&gt;## H2
@@ -47,10 +47,10 @@
     
     <item>
       <title>药师灌顶真言</title>
-      <link>https://hliblack.github.com/posts/chinese-preview/</link>
+      <link>https://hliblack.github.io/posts/chinese-preview/</link>
       <pubDate>Tue, 11 Feb 2020 14:26:00 +0800</pubDate>
       
-      <guid>https://hliblack.github.com/posts/chinese-preview/</guid>
+      <guid>https://hliblack.github.io/posts/chinese-preview/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;修学药师灌顶真言是药师法门的一部分，读诵修持有着极大的功德利益&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -63,10 +63,10 @@
     
     <item>
       <title>关于</title>
-      <link>https://hliblack.github.com/about/</link>
+      <link>https://hliblack.github.io/about/</link>
       <pubDate>Sat, 29 Dec 2018 20:24:28 +0800</pubDate>
       
-      <guid>https://hliblack.github.com/about/</guid>
+      <guid>https://hliblack.github.io/about/</guid>
       <description>Hugo 官方主页: https://gohugo.io/ Hugo的安装方式有两种，一种是直接下载编译好的Hugo二进制文件。如果只是使用Hugo推荐用这种方式。另一种方式是获取Hugo的源码，自己编译。由于各种不可预料的网络问题，第二种方式不</description>
     </item>
     

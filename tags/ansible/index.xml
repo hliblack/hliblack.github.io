@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>ansible on Pray</title>
-    <link>https://hliblack.github.com/tags/ansible/</link>
+    <link>https://hliblack.github.io/tags/ansible/</link>
     <description>Recent content in ansible on Pray</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Wed, 25 Mar 2020 17:20:50 +0800</lastBuildDate>
     
-	<atom:link href="https://hliblack.github.com/tags/ansible/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://hliblack.github.io/tags/ansible/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Ansible条件判断详解</title>
-      <link>https://hliblack.github.com/posts/ansible%E9%85%8D%E7%BD%AE/</link>
+      <link>https://hliblack.github.io/posts/ansible%E9%85%8D%E7%BD%AE/</link>
       <pubDate>Wed, 25 Mar 2020 17:20:50 +0800</pubDate>
       
-      <guid>https://hliblack.github.com/posts/ansible%E9%85%8D%E7%BD%AE/</guid>
+      <guid>https://hliblack.github.io/posts/ansible%E9%85%8D%E7%BD%AE/</guid>
       <description>Ansible条件判断详解 &amp;mdash;&amp;ndash;2019.05.25 1、when 条件判断 绝大多数语言中，都使用&amp;quot;if&amp;quot;作为条件判断的关键字，而在ansible中，条件判断的关键字是&amp;quot;when&amp;rdquo;，一个</description>
     </item>
     
     <item>
       <title>如何配置Ansible？Ansible三种配置方法详解</title>
-      <link>https://hliblack.github.com/posts/ansible%E9%85%8D%E7%BD%AE/</link>
+      <link>https://hliblack.github.io/posts/ansible%E9%85%8D%E7%BD%AE/</link>
       <pubDate>Thu, 19 Mar 2020 09:49:00 +0800</pubDate>
       
-      <guid>https://hliblack.github.com/posts/ansible%E9%85%8D%E7%BD%AE/</guid>
+      <guid>https://hliblack.github.io/posts/ansible%E9%85%8D%E7%BD%AE/</guid>
       <description>如何配置Ansible？Ansible三种配置方法详解 引用自：运维有道 2018.12.30 文章 如何配置Ansible？Ansible三种配置方法详解 前面我们学会了如何安装Ansible管理节点，这里我们来看看如何配置A</description>
     </item>
     

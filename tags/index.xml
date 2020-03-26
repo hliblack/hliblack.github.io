@@ -2,48 +2,48 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Pray</title>
-    <link>https://hliblack.github.com/tags/</link>
+    <link>https://hliblack.github.io/tags/</link>
     <description>Recent content in Tags on Pray</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Wed, 25 Mar 2020 17:20:50 +0800</lastBuildDate>
     
-	<atom:link href="https://hliblack.github.com/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://hliblack.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>ansible</title>
-      <link>https://hliblack.github.com/tags/ansible/</link>
+      <link>https://hliblack.github.io/tags/ansible/</link>
       <pubDate>Wed, 25 Mar 2020 17:20:50 +0800</pubDate>
       
-      <guid>https://hliblack.github.com/tags/ansible/</guid>
+      <guid>https://hliblack.github.io/tags/ansible/</guid>
       <description></description>
     </item>
     
     <item>
       <title>theme</title>
-      <link>https://hliblack.github.com/tags/theme/</link>
+      <link>https://hliblack.github.io/tags/theme/</link>
       <pubDate>Wed, 11 Mar 2020 17:49:40 +0800</pubDate>
       
-      <guid>https://hliblack.github.com/tags/theme/</guid>
+      <guid>https://hliblack.github.io/tags/theme/</guid>
       <description></description>
     </item>
     
     <item>
       <title>中文</title>
-      <link>https://hliblack.github.com/tags/%E4%B8%AD%E6%96%87/</link>
+      <link>https://hliblack.github.io/tags/%E4%B8%AD%E6%96%87/</link>
       <pubDate>Tue, 11 Feb 2020 14:26:00 +0800</pubDate>
       
-      <guid>https://hliblack.github.com/tags/%E4%B8%AD%E6%96%87/</guid>
+      <guid>https://hliblack.github.io/tags/%E4%B8%AD%E6%96%87/</guid>
       <description></description>
     </item>
     
     <item>
       <title>真言</title>
-      <link>https://hliblack.github.com/tags/%E7%9C%9F%E8%A8%80/</link>
+      <link>https://hliblack.github.io/tags/%E7%9C%9F%E8%A8%80/</link>
       <pubDate>Tue, 11 Feb 2020 14:26:00 +0800</pubDate>
       
-      <guid>https://hliblack.github.com/tags/%E7%9C%9F%E8%A8%80/</guid>
+      <guid>https://hliblack.github.io/tags/%E7%9C%9F%E8%A8%80/</guid>
       <description></description>
     </item>
     
