@@ -6,10 +6,19 @@
     <description>Recent content in ansible on Pray</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 25 Mar 2020 17:20:50 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 03 Apr 2020 15:36:12 +0800</lastBuildDate>
     
 	<atom:link href="https://hliblack.github.io/tags/ansible/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Ansible笔记</title>
+      <link>https://hliblack.github.io/posts/ansible/</link>
+      <pubDate>Fri, 03 Apr 2020 15:36:12 +0800</pubDate>
+      
+      <guid>https://hliblack.github.io/posts/ansible/</guid>
+      <description>ansible 安装 主控端： apt install python-pip -y yum install python-pip -y easy_istall python-pip //macOS pip install -U pip //升级pip pip install ansible 被控端(需要依赖 OpenSSH server 和 Python )： apt install openssh-server python2.7 -y yum install -y openssl-server python 配置 默认配置文件路径：/etc/ansible/ 通常会将 ansible.cfg 和 hosts 这两个档案与其它的 Playbooks 放在同</description>
+    </item>
     
     <item>
       <title>Ansible条件判断详解</title>

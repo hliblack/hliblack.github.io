@@ -101,6 +101,72 @@
 
 <div class="post animated fadeInDown">
   <div class="post_title">
+    <h2><a href='/posts/nextcloud/'>搭建 NextCloud &#43; OSS 遇到的问题</a></h2>
+  </div>
+  
+  <div class="list">
+    <div class="post_content markdown">
+      <p>问题一：OnlyOffice DocumentServer 设置 https 问题 根据 Dockerhub 上的 documentserver 使用描述，可使用自签名证书，但在 nextcloud 中使用时无法使用，解决方案有以下两种： 更改 nextcloud 的config.php 文件，添加``` &lsquo;onlyoffice&rsquo; =&gt; array ( &lsquo;verify_peer_off&rsquo; =&gt;TRUE, ), 该设置不会检测证书......</p>
+    </div>
+  </div>
+  
+  <div class="post_footer">
+    <div class="meta">
+      <div class="info">
+        <span class="field">
+          <i class="remixicon-map-pin-time-line"></i>
+          <span class="date">2020.04.03</span>
+        </span>
+        
+        <span class="field tags">
+          <i class="remixicon-stack-line"></i>
+          
+          <a href="https://hliblack.github.io/tags/nextcloud/">nextcloud</a>
+          
+          <a href="https://hliblack.github.io/tags/oss/">oss</a>
+          
+          <a href="https://hliblack.github.io/tags/documentserver/">documentserver</a>
+          
+        </span>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="post animated fadeInDown">
+  <div class="post_title">
+    <h2><a href='/posts/ansible/'>Ansible笔记</a></h2>
+  </div>
+  
+  <div class="list">
+    <div class="post_content markdown">
+      <p>ansible 安装 主控端： apt install python-pip -y yum install python-pip -y easy_istall python-pip //macOS pip install -U pip //升级pip pip install ansible 被控端(需要依赖 OpenSSH server 和 Python )： apt install openssh-server python2.7 -y yum install -y openssl-server python 配置 默认配置文件路径：/etc/ansible/ 通常会将 ansible.cfg 和 hosts 这两个档案与其它的 Playbooks 放在同......</p>
+    </div>
+  </div>
+  
+  <div class="post_footer">
+    <div class="meta">
+      <div class="info">
+        <span class="field">
+          <i class="remixicon-map-pin-time-line"></i>
+          <span class="date">2020.04.03</span>
+        </span>
+        
+        <span class="field tags">
+          <i class="remixicon-stack-line"></i>
+          
+          <a href="https://hliblack.github.io/tags/ansible/">ansible</a>
+          
+        </span>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="post animated fadeInDown">
+  <div class="post_title">
     <h2><a href='/posts/ansible%E9%85%8D%E7%BD%AE/'>Ansible条件判断详解</a></h2>
   </div>
   
@@ -153,84 +219,6 @@
           <i class="remixicon-stack-line"></i>
           
           <a href="https://hliblack.github.io/tags/ansible/">ansible</a>
-          
-        </span>
-        
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="post animated fadeInDown">
-  <div class="post_title">
-    <h2><a href='/posts/theme-preview/'>Theme Preview</a></h2>
-  </div>
-  
-  <div class="list">
-    <div class="post_content markdown">
-      <p><h1 id="headings">Headings</h1>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown"># H1
-<span style="color:#75715e">## H2
-</span><span style="color:#75715e"></span><span style="color:#75715e">### H3
-</span><span style="color:#75715e"></span><span style="color:#75715e">#### H4
-</span><span style="color:#75715e"></span><span style="color:#75715e">##### H5
-</span><span style="color:#75715e"></span><span style="color:#75715e">###### H6
-</span></code></pre></div>......</p>
-    </div>
-  </div>
-  
-  <div class="post_footer">
-    <div class="meta">
-      <div class="info">
-        <span class="field">
-          <i class="remixicon-map-pin-time-line"></i>
-          <span class="date">2020.03.11</span>
-        </span>
-        
-        <span class="field tags">
-          <i class="remixicon-stack-line"></i>
-          
-          <a href="https://hliblack.github.io/tags/theme/">theme</a>
-          
-        </span>
-        
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="post animated fadeInDown">
-  <div class="post_title">
-    <h2><a href='/posts/chinese-preview/'>药师灌顶真言</a></h2>
-  </div>
-  
-  <div class="list">
-    <div class="post_content markdown">
-      <p><blockquote>
-<p>修学药师灌顶真言是药师法门的一部分，读诵修持有着极大的功德利益</p>
-</blockquote>
-<h1 id="内容">内容</h1>
-<p>南无薄伽伐帝鞞杀社</p>
-<p>窭噜薜琉璃</p>
-<p>跋喇婆</p>
-<p>喝啰阇也</p>......</p>
-    </div>
-  </div>
-  
-  <div class="post_footer">
-    <div class="meta">
-      <div class="info">
-        <span class="field">
-          <i class="remixicon-map-pin-time-line"></i>
-          <span class="date">2020.02.11</span>
-        </span>
-        
-        <span class="field tags">
-          <i class="remixicon-stack-line"></i>
-          
-          <a href="https://hliblack.github.io/tags/%E4%B8%AD%E6%96%87/">中文</a>
-          
-          <a href="https://hliblack.github.io/tags/%E7%9C%9F%E8%A8%80/">真言</a>
           
         </span>
         

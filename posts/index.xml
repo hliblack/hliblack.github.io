@@ -6,10 +6,28 @@
     <description>Recent content in Posts on Pray</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 25 Mar 2020 17:20:50 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 03 Apr 2020 15:37:22 +0800</lastBuildDate>
     
 	<atom:link href="https://hliblack.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>搭建 NextCloud &#43; OSS 遇到的问题</title>
+      <link>https://hliblack.github.io/posts/nextcloud/</link>
+      <pubDate>Fri, 03 Apr 2020 15:37:22 +0800</pubDate>
+      
+      <guid>https://hliblack.github.io/posts/nextcloud/</guid>
+      <description>问题一：OnlyOffice DocumentServer 设置 https 问题 根据 Dockerhub 上的 documentserver 使用描述，可使用自签名证书，但在 nextcloud 中使用时无法使用，解决方案有以下两种： 更改 nextcloud 的config.php 文件，添加``` &amp;lsquo;onlyoffice&amp;rsquo; =&amp;gt; array ( &amp;lsquo;verify_peer_off&amp;rsquo; =&amp;gt;TRUE, ), 该设置不会检测证书</description>
+    </item>
+    
+    <item>
+      <title>Ansible笔记</title>
+      <link>https://hliblack.github.io/posts/ansible/</link>
+      <pubDate>Fri, 03 Apr 2020 15:36:12 +0800</pubDate>
+      
+      <guid>https://hliblack.github.io/posts/ansible/</guid>
+      <description>ansible 安装 主控端： apt install python-pip -y yum install python-pip -y easy_istall python-pip //macOS pip install -U pip //升级pip pip install ansible 被控端(需要依赖 OpenSSH server 和 Python )： apt install openssh-server python2.7 -y yum install -y openssl-server python 配置 默认配置文件路径：/etc/ansible/ 通常会将 ansible.cfg 和 hosts 这两个档案与其它的 Playbooks 放在同</description>
+    </item>
     
     <item>
       <title>Ansible条件判断详解</title>
@@ -27,38 +45,6 @@
       
       <guid>https://hliblack.github.io/posts/ansible%E9%85%8D%E7%BD%AE/</guid>
       <description>如何配置Ansible？Ansible三种配置方法详解 引用自：运维有道 2018.12.30 文章 如何配置Ansible？Ansible三种配置方法详解 前面我们学会了如何安装Ansible管理节点，这里我们来看看如何配置A</description>
-    </item>
-    
-    <item>
-      <title>Theme Preview</title>
-      <link>https://hliblack.github.io/posts/theme-preview/</link>
-      <pubDate>Wed, 11 Mar 2020 17:49:40 +0800</pubDate>
-      
-      <guid>https://hliblack.github.io/posts/theme-preview/</guid>
-      <description>&lt;h1 id=&#34;headings&#34;&gt;Headings&lt;/h1&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-markdown&#34; data-lang=&#34;markdown&#34;&gt;# H1
-&lt;span style=&#34;color:#75715e&#34;&gt;## H2
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;### H3
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#### H4
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;##### H5
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;###### H6
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>药师灌顶真言</title>
-      <link>https://hliblack.github.io/posts/chinese-preview/</link>
-      <pubDate>Tue, 11 Feb 2020 14:26:00 +0800</pubDate>
-      
-      <guid>https://hliblack.github.io/posts/chinese-preview/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;修学药师灌顶真言是药师法门的一部分，读诵修持有着极大的功德利益&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1 id=&#34;内容&#34;&gt;内容&lt;/h1&gt;
-&lt;p&gt;南无薄伽伐帝鞞杀社&lt;/p&gt;
-&lt;p&gt;窭噜薜琉璃&lt;/p&gt;
-&lt;p&gt;跋喇婆&lt;/p&gt;
-&lt;p&gt;喝啰阇也&lt;/p&gt;</description>
     </item>
     
   </channel>

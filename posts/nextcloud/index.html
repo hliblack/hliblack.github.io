@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-cn" >
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  
+  <meta name="author"
+        content="hliblack"/>
+
+  
+  <meta name="description" content="问题一：OnlyOffice DocumentServer 设置 https 问题 根据 Dockerhub 上的 documentserver 使用描述，可使用自签名证书，但在 nextcloud 中使用时无法使用，解决方案有以下两种： 更改 nextcloud 的config.php 文件，添加``` &amp;lsquo;onlyoffice&amp;rsquo; =&amp;gt; array ( &amp;lsquo;verify_peer_off&amp;rsquo; =&amp;gt;TRUE, ), 该设置不会检测证书"/>
+  
+
+  
+  
+  <meta name="keywords" content="nextcloud, oss, documentserver"/>
+  
+
+  
+  <link rel="canonical" href="https://hliblack.github.io/posts/nextcloud/"/>
+
+  
+
+  <title>搭建 NextCloud &#43; OSS 遇到的问题 &middot; Pray</title>
+
+  <link rel="shortcut icon" href="https://hliblack.github.io/images/favicon.ico"/>
+  <link rel="stylesheet" href="https://hliblack.github.io/css/animate.min.css"/>
+  <link rel="stylesheet" href="https://hliblack.github.io/css/remixicon.css"/>
+  <link rel="stylesheet" href="https://hliblack.github.io/css/zozo.css"/>
+  <link rel="stylesheet" href="https://hliblack.github.io/css/highlight.css"/>
+
+  
+  
+</head>
+
+<body>
+<div class="main animated">
+  <div class="nav_container animated fadeInDown">
+  <div class="site_nav" id="site_nav">
+    <ul>
+      
+      <li>
+        <a href="/">首页</a>
+      </li>
+      
+      <li>
+        <a href="/categories/">分类</a>
+      </li>
+      
+      <li>
+        <a href="/posts/">归档</a>
+      </li>
+      
+      <li>
+        <a href="/tags/">标签</a>
+      </li>
+      
+      <li>
+        <a href="/about/">关于</a>
+      </li>
+      
+    </ul>
+  </div>
+  <div class="menu_icon">
+    <a id="menu_icon"><i class="remixicon-links-line"></i></a>
+  </div>
+</div>
+
+  <div class="header animated fadeInDown">
+  <div class="site_title_container">
+    <div class="site_title">
+      <h1>
+        <a href="https://hliblack.github.io">
+          <span>Pray</span>
+          <img src="https://hliblack.github.io/images/logo.svg"/>
+        </a>
+      </h1>
+    </div>
+    <div class="description">
+      <p class="sub_title">记录学习工作中的问题</p>
+      <div class="my_socials">
+        
+        
+        <a href="https://github.com/hliblack" title="github" target="_blank"><i class="remixicon-github-fill"></i></a>
+        
+        
+        <a href="https://hliblack.github.io/index.xml" type="application/rss+xml" title="rss" target="_blank"><i class="remixicon-rss-fill"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="content">
+    <div class="post_page">
+      <div class="post animated fadeInDown">
+        <div class="post_title post_detail_title">
+          <h2><a href='/posts/nextcloud/'>搭建 NextCloud &#43; OSS 遇到的问题</a></h2>
+          <span class="date">2020.04.03</span>
+        </div>
+        <div class="post_content markdown"><h2 id="问题一onlyoffice-documentserver-设置-https-问题">问题一：OnlyOffice DocumentServer 设置 https 问题</h2>
+<p>根据 Dockerhub 上的 documentserver 使用描述，可使用自签名证书，但在 nextcloud 中使用时无法使用，解决方案有以下两种：</p>
+<ul>
+<li>
+<p>更改 nextcloud 的config.php 文件，添加```
+&lsquo;onlyoffice&rsquo; =&gt;
+array (
+&lsquo;verify_peer_off&rsquo; =&gt;TRUE,
+),</p>
+<pre><code>    
+该设置不会检测证书是否和有效，因此可在onlyoffice插件中填入
+    
+</code></pre><p>https://ip:port/</p>
+<pre><code>    
+保存后可进行在线编辑，但是即使 nexcloud 设置了 SSL，在使用 onlyoffice 在线编辑后浏览器仍然会显示 SSL 不安全。
+    
+&gt; 参考链接：[Nextcloud ONLYOFFICE integration app](https://api.onlyoffice.com/editors/nextcloud &quot;https://api.onlyoffice.com/editors/nextcloud&quot;)
+    
+</code></pre></li>
+<li>
+<p>从 OnlyOffice DocumentServer 容器解决，将 NextCloud 的证书用于 documentserver 容器，需要注意的是，<strong>docker run 运行指定证书路径时，使用的是容器内部的路径</strong></p>
+<pre><code>docker run -itd -p 9003:443 \
+  -v /etc/letsencrypt/archive/nextcloud.example.com:/var/www/onlyoffice/Data \
+  -e SSL_CERTIFICATE_PATH=/var/www/onlyoffice/Data/cert1.pem \
+  -e SSL_KEY_PATH=/var/www/onlyoffice/Data/privkey1.pem onlyoffice/documentserver
+</code></pre><blockquote>
+<p>参考链接：<a href="https://hub.docker.com/r/onlyoffice/documentserver" title="https://hub.docker.com/r/onlyoffice/documentserver">onlyoffice/documentserver</a></p>
+</blockquote>
+</li>
+</ul>
+<h2 id="问题二oss-挂载问题">问题二：OSS 挂载问题</h2>
+<h4 id="如何挂载">如何挂载？</h4>
+<blockquote>
+<p>参考阿里云官方文档：<a href="https://help.aliyun.com/document_detail/153892.html?spm=a2c4g.11186623.6.751.725a142bz17NNT" title="https://help.aliyun.com/document_detail/153892.html?spm=a2c4g.11186623.6.751.725a142bz17NNT">快速安装和配置 ossfs</a></p>
+</blockquote>
+<h4 id="挂载注意事项">挂载注意事项：</h4>
+<ol>
+<li>
+<p>目录结构问题：</p>
+<ul>
+<li>使用外部存储挂载</li>
+<li>挂载到 nextcloud 目录，如果 oss 原本就有数据，则需要将数据目录放到 nextcloud 用户目录下去，然后在服务器 nextcloud 根目录下执行 <code>sudo -u apache php occ files:scan --all</code> 命令才能在前端正确显示。</li>
+</ul>
+<blockquote>
+<p>sudo -u apache php occ files:scan &ndash;all 也可以只指定单个用户，如：sudo -u apache php occ files:scan &ndash;admin</p>
+</blockquote>
+</li>
+<li>
+<p>执行 <code>sudo -u apache php occ files:scan</code> 出错：</p>
+<blockquote>
+<p>Exception during scan: File entry could not be inserted but could also not be selected with getId() in order to perform an update. Please try again.</p>
+</blockquote>
+<p>出错时，先执行：<strong><code>sudo -u apache php -f ./cron.php</code></strong></p>
+</li>
+</ol>
+<h2 id="问题三新建用户在oss里没有用户目录问题">问题三：新建用户在OSS里没有用户目录问题</h2>
+<p>NextCloud 中新建用户会在首次登陆时自动生成用户目录。</p>
+</div>
+        <div class="post_footer">
+          
+          <div class="meta">
+            <div class="info">
+              <span class="field tags">
+                <i class="remixicon-stack-line"></i>
+                
+                <a href="https://hliblack.github.io/tags/nextcloud/">nextcloud</a>
+                
+                <a href="https://hliblack.github.io/tags/oss/">oss</a>
+                
+                <a href="https://hliblack.github.io/tags/documentserver/">documentserver</a>
+                
+              </span>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+      
+    </div>
+  </div>
+  <a id="back_to_top" href="#" class="back_to_top"><span>△</span></a>
+</div>
+<footer class="footer">
+  <div class="powered_by">
+    <a href="https://zeuk.me">Designed by Zeuk,</a>
+    <a href="http://www.gohugo.io/">Proudly published with Hugo</a>
+  </div>
+
+  <div class="footer_slogan">
+    <span>Pray for you</span>
+  </div>
+</footer>
+
+
+
+<script src="https://hliblack.github.io/js/jquery-3.3.1.min.js"></script>
+<script src="https://hliblack.github.io/js/zozo.js"></script>
+<script src="https://hliblack.github.io/js/highlight.pack.js"></script>
+<link  href="https://hliblack.github.io/css/fancybox.min.css" rel="stylesheet">
+<script src="https://hliblack.github.io/js/fancybox.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad()</script>
+
+
+  <script type="text/javascript" async src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+
+
+
+
+</body>
+</html>

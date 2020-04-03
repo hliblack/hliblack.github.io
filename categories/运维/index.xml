@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>运维 on Pray</title>
+    <link>https://hliblack.github.io/categories/%E8%BF%90%E7%BB%B4/</link>
+    <description>Recent content in 运维 on Pray</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 03 Apr 2020 15:37:22 +0800</lastBuildDate>
+    
+	<atom:link href="https://hliblack.github.io/categories/%E8%BF%90%E7%BB%B4/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>搭建 NextCloud &#43; OSS 遇到的问题</title>
+      <link>https://hliblack.github.io/posts/nextcloud/</link>
+      <pubDate>Fri, 03 Apr 2020 15:37:22 +0800</pubDate>
+      
+      <guid>https://hliblack.github.io/posts/nextcloud/</guid>
+      <description>问题一：OnlyOffice DocumentServer 设置 https 问题 根据 Dockerhub 上的 documentserver 使用描述，可使用自签名证书，但在 nextcloud 中使用时无法使用，解决方案有以下两种： 更改 nextcloud 的config.php 文件，添加``` &amp;lsquo;onlyoffice&amp;rsquo; =&amp;gt; array ( &amp;lsquo;verify_peer_off&amp;rsquo; =&amp;gt;TRUE, ), 该设置不会检测证书</description>
+    </item>
+    
+  </channel>
+</rss>
