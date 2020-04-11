@@ -19,17 +19,17 @@
   
 
   
-  <link rel="canonical" href="https://hliblack.github.io/posts/ansible%E9%85%8D%E7%BD%AE/"/>
+  <link rel="canonical" href="https://hyouka.top/posts/ansible%E9%85%8D%E7%BD%AE/"/>
 
   
 
   <title>如何配置Ansible？Ansible三种配置方法详解 &middot; Pray</title>
 
-  <link rel="shortcut icon" href="https://hliblack.github.io/images/favicon.ico"/>
-  <link rel="stylesheet" href="https://hliblack.github.io/css/animate.min.css"/>
-  <link rel="stylesheet" href="https://hliblack.github.io/css/remixicon.css"/>
-  <link rel="stylesheet" href="https://hliblack.github.io/css/zozo.css"/>
-  <link rel="stylesheet" href="https://hliblack.github.io/css/highlight.css"/>
+  <link rel="shortcut icon" href="https://hyouka.top/images/favicon.ico"/>
+  <link rel="stylesheet" href="https://hyouka.top/css/animate.min.css"/>
+  <link rel="stylesheet" href="https://hyouka.top/css/remixicon.css"/>
+  <link rel="stylesheet" href="https://hyouka.top/css/zozo.css"/>
+  <link rel="stylesheet" href="https://hyouka.top/css/highlight.css"/>
 
   
   
@@ -72,9 +72,9 @@
   <div class="site_title_container">
     <div class="site_title">
       <h1>
-        <a href="https://hliblack.github.io">
+        <a href="https://hyouka.top">
           <span>Pray</span>
-          <img src="https://hliblack.github.io/images/logo.svg"/>
+          <img src="https://hyouka.top/images/logo.svg"/>
         </a>
       </h1>
     </div>
@@ -86,7 +86,7 @@
         <a href="https://github.com/hliblack" title="github" target="_blank"><i class="remixicon-github-fill"></i></a>
         
         
-        <a href="https://hliblack.github.io/index.xml" type="application/rss+xml" title="rss" target="_blank"><i class="remixicon-rss-fill"></i></a>
+        <a href="https://hyouka.top/index.xml" type="application/rss+xml" title="rss" target="_blank"><i class="remixicon-rss-fill"></i></a>
       </div>
     </div>
   </div>
@@ -183,7 +183,7 @@ ANSIBLE_REMOTE_USER=admin
               <span class="field tags">
                 <i class="remixicon-stack-line"></i>
                 
-                <a href="https://hliblack.github.io/tags/ansible/">ansible</a>
+                <a href="https://hyouka.top/tags/ansible/">ansible</a>
                 
               </span>
             </div>
@@ -210,297 +210,11 @@ ANSIBLE_REMOTE_USER=admin
 
 
 
-<script src="https://hliblack.github.io/js/jquery-3.3.1.min.js"></script>
-<script src="https://hliblack.github.io/js/zozo.js"></script>
-<script src="https://hliblack.github.io/js/highlight.pack.js"></script>
-<link  href="https://hliblack.github.io/css/fancybox.min.css" rel="stylesheet">
-<script src="https://hliblack.github.io/js/fancybox.min.js"></script>
-
-<script>hljs.initHighlightingOnLoad()</script>
-
-
-  <script type="text/javascript" async src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-MathJax.Hub.Config({
-  tex2jax: {
-    inlineMath: [['$','$'], ['\\(','\\)']],
-    displayMath: [['$$','$$'], ['\[\[','\]\]']],
-    processEscapes: true,
-    processEnvironments: true,
-    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-    TeX: { equationNumbers: { autoNumber: "AMS" },
-         extensions: ["AMSmath.js", "AMSsymbols.js"] }
-  }
-});
-
-MathJax.Hub.Queue(function() {
-    
-    
-    
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i = 0; i < all.length; i += 1) {
-        all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-});
-</script>
-
-<style>
-code.has-jax {
-    font: inherit;
-    font-size: 100%;
-    background: inherit;
-    border: inherit;
-    color: #515151;
-}
-</style>
-
-
-
-
-
-
-</body>
-</html>
-p>可以使用'stdout'值访问已注册变量的字符串内容，也可以检查已注册变量的字符串内容是否空白：</p>
-<pre><code>- name: check registered variable for emptiness
-hosts: all
-tasks:
-  - name: list contents of directory
-    command: ls mydir
-    register: contents
-  - name: check contents for emptiness
-    debug:
-      msg: &quot;Directory is empty&quot;
-    when: contents.stdout == &quot;&quot;
-    
-</code></pre></li>
-<li>
-<p>如果 mydir 目录不存在，<code>ls mydir</code>语句报错，playbook 执行停止，这时可以使用 ignore_errors 关键字。<code>ignore_errors: true</code>表示即使当前 task 执行报错，Ansible 也会忽略这个错误，继续执行 playbook：</p>
-<pre><code>- name: check registered variable
-hosts: all
-tasks:
-  - name: list contents of directory
-    command: ls mydir
-    register: contents
-    ignore_errors: true
-  - name: mydir exists
-    debug:
-      msg: &quot;Command execution successful&quot;
-    when: contents.rc == 0
-  - name: mydir does not exist
-    debug:
-      msg: &quot;Command execution failed&quot;
-    when: contents.rc != 0
-    
-</code></pre></li>
-</ul>
-<h2 id="4条件判断与block">4、条件判断与block</h2>
-<p>block 允许逻辑分组任务和错误处理，可以在 block 中应用大多数可应用于单个任务（循环除外）的任务，这使得设置任务共有的数据或指令变得更加容易。</p>
-<h3 id="block-用于分组任务">block 用于分组任务</h3>
-<pre><code>tasks:
-   - name: Install, configure, and start Apache
-     block:
-     - name: install httpd and memcached
-       yum:
-         name: &quot;{{ item }}&quot;
-         state: present
-       loop:
-         - httpd
-         - memcached
-     - name: apply the foo config template
-       template:
-         src: templates/src.j2
-         dest: /etc/foo.conf
-     - name: start service bar and enable it
-       service:
-         name: bar
-         state: started
-         enabled: True
-     when: ansible_facts['distribution'] == 'CentOS'
-     become: true
-     become_user: root
-     ignore_errors: yes
-
-</code></pre><h3 id="block-用于错误处理">block 用于错误处理</h3>
-<p>block 还引入了以类似于大多数编程语言中的异常的方式处理错误的能力，block 仅处理 tasks 的“失败”，不包括错误的任务定义或主机无法访问。</p>
-<pre><code> tasks:
- - name: Handle the error
-   block:
-     - debug:
-         msg: 'I execute normally'
-     - name: i force a failure
-       command: /bin/false
-     - debug:
-         msg: 'I never execute, due to the above task failing, :-('
-   rescue:
-     - debug:
-         msg: 'I caught an error, can do stuff here to fix it, :-)'
-
-</code></pre><ul>
-<li>
-<p>除了 block 关键字，还有另外一个关键字 rescue，rescue 关键字与 block 关键字同级，rescue 的字面意思为&quot;救援&rdquo;，表示当 block 中的任务执行失败时，会执行 rescue 中的任务进行补救，这将“恢复”运行任务的失败状态，并且 playbook 将继续，就像它已成功一样。</p>
-</li>
-<li>
-<p>rescue 关键字可用的变量：</p>
-<pre><code>ansible_failed_task：The task that returned ‘failed’ and triggered the rescue. For example, to get the name use ansible_failed_task.name.
-    
-ansible_failed_result：The captured return result of the failed task that triggered the rescue. This would equate to having used this var in the register keyword.
-    
-</code></pre></li>
-</ul>
-<p>可以使用 always 关键字，加入 always 关键字以后，无论 block 中的任务执行成功还是失败，always 中的任务都会被执行，示例如下：</p>
-<pre><code> - name: Always do X
-   block:
-     - debug:
-         msg: 'I execute normally'
-     - name: i force a failure
-       command: /bin/false
-     - debug:
-         msg: 'I never execute :-('
-   always:
-     - debug:
-         msg: &quot;This always executes, :-)&quot;
-
-</code></pre><p>一个复杂的错误处理：</p>
-<pre><code>- name: Attempt and graceful roll back demo
-  block:
-    - debug:
-        msg: 'I execute normally'
-    - name: i force a failure
-      command: /bin/false
-    - debug:
-        msg: 'I never execute, due to the above task failing, :-('
-  rescue:
-    - debug:
-        msg: 'I caught an error'
-    - name: i force a failure in middle of recovery! &gt;:-)
-      command: /bin/false
-    - debug:
-        msg: 'I also never execute :-('
-  always:
-    - debug:
-        msg: &quot;This always executes&quot;
-
-</code></pre><p>还可以在 block 中执行 handlers：</p>
-<pre><code>tasks:
-   - name: Attempt and graceful roll back demo
-     block:
-       - debug:
-           msg: 'I execute normally'
-         changed_when: yes
-         notify: run me even after an error
-       - command: /bin/false
-     rescue:
-       - name: make sure all handlers run
-         meta: flush_handlers
- handlers:
-    - name: run me even after an error
-      debug:
-        msg: 'This handler runs even on error'
-
-</code></pre><h2 id="5条件判断与错误处理">5、条件判断与错误处理</h2>
-<p>fail模块：</p>
-<pre><code>- hosts: test70
-  remote_user: root
-  tasks:
-  - shell: &quot;echo 'This is a string for testing--error'&quot;
-    register: return_value
-  - fail:
-      msg: &quot;Conditions established,Interrupt running playbook&quot;
-    when: &quot;'error' in return_value.stdout&quot;
-  - debug:
-      msg: &quot;I never execute,Because the playbook has stopped&quot;
-
-</code></pre><ul>
-<li>
-<p>我们使用shell模块故意输出了一个包含'error'字符串的文本，并且将shell模块执行后的返回值注册到了变量&rsquo; return_value'中，在之后调用了fail模块，并对fail模块添加了判断条件，对应的条件为 &ldquo;&lsquo;error&rsquo; in return_value.stdout&rdquo;，这个条件表示shell模块执行后的标注输出信息中如果包含'error'字符串，则条件成立，其中，&lsquo;in'关键字的用法与python中'in'的用法相同，可以使用'in'关键字判断一个字符串是否存在于另一个字符串中，也可以用于判断一个特定的值是否存在于列表中，由于shell标准输出的信息中的确包含error字符串，所以fail模块对应的条件成立，最终调用fail模块，playbook终止运行。不过需要注意的是，当使用&quot;in&quot;或者&quot;not in&quot;进行条件判断时，整个条件需要用引号引起，并且，需要判断的字符串也需要使用引号引起，所以，使用'in'或者'not in'进行条件判断时，如下两种语法是正确的：</p>
-<pre><code>when: ' &quot;successful&quot; not in return_value.stdout '
-when: &quot; 'successful' not in return_value.stdout &quot;
-    
-</code></pre></li>
-</ul>
-<p>借助'failed_when'关键字来完成类似功能，&lsquo;failed_when'的作用就是，当对应的条件成立时，将对应任务的执行状态设置为失败：</p>
-<pre><code>- hosts: test70
-  remote_user: root
-  tasks:
-  - debug:
-      msg: &quot;I execute normally&quot;
-  - shell: &quot;echo 'This is a string for testing error'&quot;
-    register: return_value
-    failed_when: ' &quot;error&quot; in return_value.stdout'
-  - debug:
-      msg: &quot;I never execute,Because the playbook has stopped&quot;
-
-</code></pre><p>理解了&rsquo; failed_when'关键字以后，顺势理解'changed_when'关键字就容易多了：</p>
-<ul>
-<li>
-<p>' failed_when'关键字的作用是在条件成立时，将对应任务的执行状态设置为失败</p>
-</li>
-<li>
-<p>&lsquo;changed_when'关键字的作用是在条件成立时，将对应任务的执行状态设置为changed</p>
-<pre><code>- hosts: test70
-  remote_user: root
-  tasks:
-  - debug:
-      msg: &quot;test message&quot;
-    changed_when: 2 &gt; 1
-    
-</code></pre></li>
-<li>
-<p>我们知道，debug模块在正常执行的情况下只能是&quot;ok&quot;状态，上例中，我们使用'changed_when'关键字将debug模块的执行后的状态定义为了&quot;changed&rdquo;</p>
-</li>
-</ul>
-<p>前文中总结过handlers的用法，我们知道，只有任务作出了实际的操作时（执行后状态为changed），才会真正的执行对应的handlers，而在某些时候，如果想要通过任务执行后的返回值将任务的最终执行状态判定为changed，则可以使用'changed_when'关键字，以便条件成立时，可以执行对应的handlers，其实，&lsquo;changed_when'除了能够在条件成立时将任务的执行状态设置为&quot;changed&rdquo;，还能让对应的任务永远不能是changed状态，示例如下：</p>
-<pre><code>- hosts: test70
-  remote_user: root
-  tasks:
-  - shell: &quot;ls /opt&quot;
-    changed_when: false
-
-</code></pre><p>当将'changed_when'直接设置为false时，对应任务的状态将不会被设置为'changed&rsquo;，如果任务原本的执行状态为'changed&rsquo;，最终则会被设置为'ok&rsquo;，所以，上例playbook执行后，shell模块的执行状态最终为'ok&rsquo;。</p>
-<p>参考文档</p>
-<p><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_conditionals.html">Ansible Docs » Conditionals</a></p>
-<p><a href="http://www.zsythink.net/archives/2846">ansible笔记（29）：条件判断与错误处理</a></p>
-<p><a href="https://www.ityoudao.cn/tags/ansible/">Ansible</a> <a href="https://www.ityoudao.cn/tags/cicd/">CICD</a></p>
-</div>
-        <div class="post_footer">
-          
-          <div class="meta">
-            <div class="info">
-              <span class="field tags">
-                <i class="remixicon-stack-line"></i>
-                
-                <a href="https://hliblack.github.io/tags/ansible/">ansible</a>
-                
-              </span>
-            </div>
-          </div>
-          
-        </div>
-      </div>
-      
-      
-    </div>
-  </div>
-  <a id="back_to_top" href="#" class="back_to_top"><span>△</span></a>
-</div>
-<footer class="footer">
-  <div class="powered_by">
-    <a href="https://zeuk.me">Designed by Zeuk,</a>
-    <a href="http://www.gohugo.io/">Proudly published with Hugo</a>
-  </div>
-
-  <div class="footer_slogan">
-    <span>Pray for you</span>
-  </div>
-</footer>
-
-
-
-<script src="https://hliblack.github.io/js/jquery-3.3.1.min.js"></script>
-<script src="https://hliblack.github.io/js/zozo.js"></script>
-<script src="https://hliblack.github.io/js/highlight.pack.js"></script>
-<link  href="https://hliblack.github.io/css/fancybox.min.css" rel="stylesheet">
-<script src="https://hliblack.github.io/js/fancybox.min.js"></script>
+<script src="https://hyouka.top/js/jquery-3.3.1.min.js"></script>
+<script src="https://hyouka.top/js/zozo.js"></script>
+<script src="https://hyouka.top/js/highlight.pack.js"></script>
+<link  href="https://hyouka.top/css/fancybox.min.css" rel="stylesheet">
+<script src="https://hyouka.top/js/fancybox.min.js"></script>
 
 <script>hljs.initHighlightingOnLoad()</script>
 

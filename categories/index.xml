@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Pray</title>
-    <link>https://hliblack.github.io/categories/</link>
+    <link>https://hyouka.top/categories/</link>
     <description>Recent content in Categories on Pray</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Fri, 03 Apr 2020 15:37:22 +0800</lastBuildDate>
     
-	<atom:link href="https://hliblack.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://hyouka.top/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>运维</title>
-      <link>https://hliblack.github.io/categories/%E8%BF%90%E7%BB%B4/</link>
+      <link>https://hyouka.top/categories/%E8%BF%90%E7%BB%B4/</link>
       <pubDate>Fri, 03 Apr 2020 15:37:22 +0800</pubDate>
       
-      <guid>https://hliblack.github.io/categories/%E8%BF%90%E7%BB%B4/</guid>
+      <guid>https://hyouka.top/categories/%E8%BF%90%E7%BB%B4/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ansible</title>
-      <link>https://hliblack.github.io/categories/ansible/</link>
+      <link>https://hyouka.top/categories/ansible/</link>
       <pubDate>Fri, 03 Apr 2020 15:36:12 +0800</pubDate>
       
-      <guid>https://hliblack.github.io/categories/ansible/</guid>
+      <guid>https://hyouka.top/categories/ansible/</guid>
       <description></description>
     </item>
     
