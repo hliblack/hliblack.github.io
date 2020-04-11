@@ -10,7 +10,7 @@
         content="hliblack"/>
 
   
-  <meta name="description" content="Ansible条件判断详解 &amp;mdash;&amp;ndash;2019.05.25 1、when 条件判断 绝大多数语言中，都使用&amp;quot;if&amp;quot;作为条件判断的关键字，而在ansible中，条件判断的关键字是&amp;quot;when&amp;rdquo;，一个"/>
+  <meta name="description" content="如何配置Ansible？Ansible三种配置方法详解 引用自：运维有道 2018.12.30 文章 如何配置Ansible？Ansible三种配置方法详解 前面我们学会了如何安装Ansible管理节点，这里我们来看看如何配置A"/>
   
 
   
@@ -23,7 +23,7 @@
 
   
 
-  <title>Ansible条件判断详解 &middot; Pray</title>
+  <title>如何配置Ansible？Ansible三种配置方法详解 &middot; Pray</title>
 
   <link rel="shortcut icon" href="https://hliblack.github.io/images/favicon.ico"/>
   <link rel="stylesheet" href="https://hliblack.github.io/css/animate.min.css"/>
@@ -96,167 +96,171 @@
     <div class="post_page">
       <div class="post animated fadeInDown">
         <div class="post_title post_detail_title">
-          <h2><a href='/posts/ansible%E9%85%8D%E7%BD%AE/'>Ansible条件判断详解</a></h2>
-          <span class="date">2020.03.25</span>
+          <h2><a href='/posts/ansible%E9%85%8D%E7%BD%AE/'>如何配置Ansible？Ansible三种配置方法详解</a></h2>
+          <span class="date">2020.03.19</span>
         </div>
-        <div class="post_content markdown"><h2 id="ansible条件判断详解httpswwwityoudaocnpostsansible-conditionals-------20190525"><a href="https://www.ityoudao.cn/posts/ansible-conditionals/">Ansible条件判断详解</a>  &mdash;&ndash;2019.05.25</h2>
-<h2 id="1when-条件判断">1、when 条件判断</h2>
-<p>绝大多数语言中，都使用&quot;if&quot;作为条件判断的关键字，而在ansible中，条件判断的关键字是&quot;when&rdquo;，一个简单的&quot;when&quot;条件判断：</p>
-<pre><code>tasks:
-  - name: &quot;shut down Debian flavored systems&quot;
-    command: /sbin/shutdown -t now
-    when: ansible_facts['os_family'] == &quot;Debian&quot;
-    # note that all variables can be used directly in conditionals without double curly braces
-
-</code></pre><ul>
-<li>
-<p>使用 when 时，变量名不需要双大括号“{{}}”。</p>
-</li>
-<li>
-<p>在上述两个示例中，我们使用了 &ldquo;==&rdquo; 和 &ldquo;&gt;&rdquo; 两个比较运算符，在 Ansible 中，我们可以使用jinja2的比较运算符，如下：</p>
-<pre><code>==  :比较两个对象是否相等，相等为真
-!=  :比较两个对象是否不等，不等为真
-&gt;   :比较两个值的大小，如果左边的值大于右边的值，则为真
-&lt;   :比较两个值的大小，如果左边的值小于右边的值，则为真
-&gt;=  :比较两个值的大小，如果左边的值大于右边的值或左右相等，则为真
-&lt;=  :比较两个值的大小，如果左边的值小于右边的值或左右相等，则为真
-    
-</code></pre></li>
+        <div class="post_content markdown"><h2 id="如何配置ansibleansible三种配置方法详解">如何配置Ansible？Ansible三种配置方法详解</h2>
+<blockquote>
+<p>引用自：运维有道 2018.12.30 文章 <a href="https://www.ityoudao.cn/posts/ansible-configuration/">如何配置Ansible？Ansible三种配置方法详解</a></p>
+</blockquote>
+<p>前面我们学会了如何安装Ansible管理节点，这里我们来看看如何配置Ansible。有三种方式可以修改Ansible配置：</p>
+<ul>
+<li>配置文件，Ansible默认的配置文件是/etc/ansible/ansible.cfg文件；</li>
+<li>环境变量，如设置环境变量ANSIBLE_REMOTE_USER=admin表示使用admin登录被管理节点。环境变量设置的参数会覆盖Ansible配置文件中对应的参数；</li>
+<li>命令行参数，如ansible命令的“-i”指定主机清单文件，“-m”指定执行的模块，“-a”指定传递给模块的参数。命令行设置的参数会覆盖配置文件盒环境变量中对应的参数。</li>
 </ul>
-<p>可以使用小括号控制条件的优先级：</p>
-<pre><code>tasks:
-  - name: &quot;shut down CentOS 6 and Debian 7 systems&quot;
-    command: /sbin/shutdown -t now
-    when: (ansible_facts['distribution'] == &quot;CentOS&quot; and ansible_facts['distribution_major_version'] == &quot;6&quot;) or
-          (ansible_facts['distribution'] == &quot;Debian&quot; and ansible_facts['distribution_major_version'] == &quot;7&quot;)
+<h2 id="通过配置文件配置ansible">通过配置文件配置Ansible</h2>
+<p>Ansible配置文件的文件名为ansible.cfg，通过配置文件设置的参数应该是对系统中大多数用户都有效的参数。Ansible按下面的顺序搜索配置文件，第一个搜索到的配置文件起作用，后面的被忽略： - ANSIBLE_CONFIG (如果设置了该环境变量) - ansible.cfg (当前目录) - ~/.ansible.cfg (当前用户的home目录) - /etc/ansible/ansible.cfg</p>
+<p>ansible.cfg是一个ini格式的文件，“#”和“;”开头的行都被当做注释，然而在行尾注释的话只能使用“;”。 如果其他用户对当前目录有写的权限，使用当前目录的ansible.cfg配置文件有安全风险，所以Ansible不会自动加载该配置文件，如果必须使用的话，可以使用ANSIBLE_CONFIG环境变量指定使用该配置文件。 Ansible配置参数参考Ansible官方文档 Docs » Ansible Configuration Settings » Common Options。</p>
+<h2 id="通过环境变量配置ansible">通过环境变量配置Ansible</h2>
+<p>部分配置参数可以通过环境变量设置，比如DEFAULT_SUDO_USER修改sudo的用户，DEFAULT_ASK_SUDO_PASS设置使用sudo命令时是否提示输入密码。更多环境变量参数参考Ansible官方文档 Docs » Ansible Configuration Settings » Environment Variables。</p>
+<h2 id="ansiblecfg配置项说明">ansible.cfg配置项说明</h2>
+<p>ansible.cfg配置文件通过分块来定义各项参数，以[分块名称]表示，常用的分块有： - [defaults]：定义一些通用的参数； - [privilege_escalation]：定义一些提升权限的参数； - [ssh_connection]：定义SSH的配置参数； - [galaxy]：定义role相关的参数； - [inventory]：定义主机清单的参数； - [paramiko_connection]：定义Python的paramiko模块相关的参数； - [persistent_connection]：定义持久化连接相关的参数； - [jinja2]：定义jinja2模板引擎相关的参数； - [selinux]：定义SELinux相关参数。</p>
+<h2 id="ansible-config命令查看配置参数">ansible-config命令查看配置参数</h2>
+<p>可以使用Ansible自带的ansible-config命令方便地查看当前生效的配置参数以及配置参数的说明。</p>
+<h3 id="语法">语法</h3>
+<pre><code>ansible-config [view|dump|list] [--help] [options] [ansible.cfg]
 
-</code></pre><ul>
-<li>
-<p>Ansible 使用的逻辑运算符有：</p>
-<pre><code>and :逻辑与，当左边与右边同时为真，则返回真
-or  :逻辑或，当左边与右边有任意一个为真，则返回真
-not :取反，对一个操作体取反
-    
-</code></pre></li>
+</code></pre><h3 id="描述">描述</h3>
+<p>查看Ansible的配置参数的工具。</p>
+<h3 id="参数">参数</h3>
+<ul>
+<li>–version：显示软件版本。</li>
+<li>-c , –config ：指定配置文件路径。</li>
+<li>-h, –help：查看帮助信息。</li>
+<li>-v, –verbose：输出调试信息，-vvv输出更多信息，-vvvv输出连接调试信息。</li>
 </ul>
-<p>逻辑与也可以使用列表表示：</p>
-<pre><code>tasks:
-  - name: &quot;shut down CentOS 6 systems&quot;
-    command: /sbin/shutdown -t now
-    when:
-      - ansible_facts['distribution'] == &quot;CentOS&quot;
-      - ansible_facts['distribution_major_version'] == &quot;6&quot;
-
-</code></pre><h2 id="2条件判断与-tests">2、条件判断与 tests</h2>
-<p>Ansible 可以使用 jinja2 的 tests 和 filters，如下：</p>
-<pre><code>tasks:
-  - command: /bin/false
-    register: result
-    ignore_errors: True
-
-  - command: /bin/something
-    when: result is failed
-
-  # In older versions of ansible use ``success``, now both are valid but succeeded uses the correct tense.
-  - command: /bin/something_else
-    when: result is succeeded
-
-  - command: /bin/still/something_else
-    when: result is skipped
-
-</code></pre><p>可以使用 debug 模块打印可用的 facts：</p>
-<pre><code>- debug: var=ansible_facts
-
-</code></pre><p>可以做算术运算：</p>
-<pre><code>tasks:
-  - shell: echo &quot;only on Red Hat 6, derivatives, and later&quot;
-    when: ansible_facts['os_family'] == &quot;RedHat&quot; and ansible_facts['lsb']['major_release']|int &gt;= 6
-
-</code></pre><ul>
-<li>输出“lsb major_release”需要 lsb_release 软件包。</li>
+<h3 id="动作">动作</h3>
+<ul>
+<li>list：列出所有配置参数并且显示参数的默认值、描述、值的类型和在环境变量、配置文件（ini和yaml）中如何设置。</li>
+<li>dump：输出当前的配置参数，如果指定了其他配置文件则同时读取该配置文件中的参数。</li>
+<li>view：输出当前使用的配置文件的内容，添加“-v”选项也输出当前使用的配置文件路径。</li>
 </ul>
-<p>使用变量：</p>
-<pre><code>vars:
-  epic: true
-tasks:
-    - shell: echo &quot;This certainly is epic!&quot;
-      when: epic
-tasks:
-    - shell: echo &quot;This certainly isn't epic!&quot;
-      when: not epic
+<h3 id="示例">示例</h3>
+<p>1）ansible-config list的用法。list其实借助了less命令，可以使用“/string”搜索“string”，使用h、j、k、l等移动光标，还可以使用h查看帮助。</p>
+<pre><code>[admin@ityoudao ~]$ ansible-config list
+ACTION_WARNINGS:
+  default: true
+  description: [By default Ansible will issue a warning when received from a task
+      action (module or action plugin), These warnings can be silenced by adjusting
+      this setting to False.]
+  env:
+  - {name: ANSIBLE_ACTION_WARNINGS}
+  ini:
+  - {key: action_warnings, section: defaults}
+  name: Toggle action warnings
+  type: boolean
+  version_added: '2.5'
+...
 
-</code></pre><p>使用 jinja2 的 tests：defined：</p>
-<pre><code>tasks:
-    - shell: echo &quot;I've got '{{ foo }}' and am not afraid to use it!&quot;
-      when: foo is defined
+</code></pre><p>2）ansible-config dump的用法：输出默认ansible.cfg配置文件中的参数以及未设置的参数的默认值。</p>
+<pre><code>[admin@ityoudao ~]$ ansible-config dump
+ACTION_WARNINGS(default) = True
+AGNOSTIC_BECOME_PROMPT(default) = True
+ALLOW_WORLD_READABLE_TMPFILES(default) = False
+ANSIBLE_CONNECTION_PATH(default) = None
+ANSIBLE_COW_PATH(default) = None
+ANSIBLE_COW_SELECTION(default) = default
+...
 
-    - fail: msg=&quot;Bailing out. this play requires 'bar'&quot;
-      when: bar is undefined
+</code></pre><p>3）ansible-config dump添加“–only-changed”只输出修改了的参数，添加“-c /somepath/ansible.cfg”同时读取该配置文件中的参数。</p>
+<pre><code>[admin@ityoudao ~]$ ansible-config dump --only-changed -c /u01/admin/ansible.cfg 
+DEFAULT_REMOTE_USER(/u01/admin/ansible.cfg) = admin
+HOST_KEY_CHECKING(/u01/admin/ansible.cfg) = False
 
-</code></pre><h3 id="判断变量的-tests">判断变量的 tests</h3>
-<pre><code>defined ：判断变量是否已经定义，已经定义则返回真
-undefind ：判断变量是否已经定义，未定义则返回真
-none ：判断变量值是否为空，如果变量已经定义，但是变量值为空，则返回真
+</code></pre><p>4）ansible-config view的用法。</p>
+<pre><code>[admin@ityoudao ~]$ ansible-config view -v
+Using /home/admin/ansible.cfg as config file
+[defaults]
+ANSIBLE_REMOTE_USER=admin
 
-</code></pre><h3 id="判断执行结果的-tests">判断执行结果的 tests</h3>
-<pre><code>success 或 succeeded：通过任务的返回信息判断任务的执行状态，任务执行成功则返回真
-failure 或 failed：通过任务的返回信息判断任务的执行状态，任务执行失败则返回真
-change 或 changed：通过任务的返回信息判断任务的执行状态，任务执行状态为changed则返回真
-skip 或 skipped：通过任务的返回信息判断任务的执行状态，当任务没有满足条件，而被跳过执行时，则返回真
+</code></pre><p><a href="https://www.ityoudao.cn/tags/ansible/">Ansible</a> <a href="https://www.ityoudao.cn/tags/cicd/">CICD</a></p>
+</div>
+        <div class="post_footer">
+          
+          <div class="meta">
+            <div class="info">
+              <span class="field tags">
+                <i class="remixicon-stack-line"></i>
+                
+                <a href="https://hliblack.github.io/tags/ansible/">ansible</a>
+                
+              </span>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+      
+    </div>
+  </div>
+  <a id="back_to_top" href="#" class="back_to_top"><span>△</span></a>
+</div>
+<footer class="footer">
+  <div class="powered_by">
+    <a href="https://zeuk.me">Designed by Zeuk,</a>
+    <a href="http://www.gohugo.io/">Proudly published with Hugo</a>
+  </div>
 
-</code></pre><h3 id="判断路径的-tests">判断路径的 tests</h3>
-<pre><code>注：如下tests的判断均针对于ansible主机中的路径，与目标主机无关
-file : 判断路径是否是一个文件，如果路径是一个文件则返回真
-directory ：判断路径是否是一个目录，如果路径是一个目录则返回真
-link ：判断路径是否是一个软链接，如果路径是一个软链接则返回真
-mount：判断路径是否是一个挂载点，如果路径是一个挂载点则返回真
-exists：判断路径是否存在，如果路径存在则返回真
+  <div class="footer_slogan">
+    <span>Pray for you</span>
+  </div>
+</footer>
 
-</code></pre><h3 id="判断字符串的-tests">判断字符串的 tests</h3>
-<pre><code>lower：判断包含字母的字符串中的字母是否是纯小写，字符串中的字母全部为小写则返回真
-upper：判断包含字母的字符串中的字母是否是纯大写，字符串中的字母全部为大写则返回真
 
-</code></pre><h3 id="判断整除的-tests">判断整除的 tests</h3>
-<pre><code>even ：判断数值是否是偶数，是偶数则返回真
-odd ：判断数值是否是奇数，是奇数则返回真
-divisibleby(num) ：判断是否可以整除指定的数值，如果除以指定的值以后余数为0，则返回真
 
-</code></pre><h3 id="其他一些-tests">其他一些 tests</h3>
-<pre><code>version：可以用于对比两个版本号的大小，或者与指定的版本号进行对比，使用语法为 version('版本号', '比较操作符')
-subset：判断一个list是不是另一个list的子集，是另一个list的子集时返回真
-superset : 判断一个list是不是另一个list的父集，是另一个list的父集时返回真
-number：判断对象是否是一个数字，是数字则返回真
+<script src="https://hliblack.github.io/js/jquery-3.3.1.min.js"></script>
+<script src="https://hliblack.github.io/js/zozo.js"></script>
+<script src="https://hliblack.github.io/js/highlight.pack.js"></script>
+<link  href="https://hliblack.github.io/css/fancybox.min.css" rel="stylesheet">
+<script src="https://hliblack.github.io/js/fancybox.min.js"></script>
 
-</code></pre><h2 id="3条件判断和-register">3、条件判断和 register</h2>
-<p>调用shell模块运行命令时，通常需要获取到shell模块的返回信息，以便之后的模块能够根据返回信息的值判断之后进行怎样的操作，这时可以使用 register 关键字。register 关键字决定保存结果的变量，结果变量可用于模板，操作行或when语句。例如：</p>
-<pre><code>- name: test play
-  hosts: all
-  tasks:
-      - shell: cat /etc/motd
-        register: motd_contents
-      - shell: echo &quot;motd contains the word hi&quot;
-        when: motd_contents.stdout.find('hi') != -1
+<script>hljs.initHighlightingOnLoad()</script>
 
-</code></pre><ul>
-<li>
-<p>如前所示，可以使用'stdout'值访问已注册变量的字符串内容。如果将注册结果转换为列表（或已经是列表），则可以在任务的循环中使用该注册结果，如下所示。在这个对象中可以用“stdout_lines”，也可以调用“home_dirs.stdout.split（）”，并且可以通过其他字段拆分：</p>
-<pre><code>- name: registered variable usage as a loop list
-hosts: all
-tasks:
-- name: retrieve the list of home directories
-  command: ls /home
-  register: home_dirs
-- name: add home dirs to the backup spooler
-  file:
-    path: /mnt/bkspool/{{ item }}
-    src: /home/{{ item }}
-    state: link
-  loop: &quot;{{ home_dirs.stdout_lines }}&quot;
-  # same as loop: &quot;{{ home_dirs.stdout.split() }}&quot;
+
+  <script type="text/javascript" async src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
     
-</code></pre></li>
-<li>
-<p>可以使用'stdout'值访问已注册变量的字符串内容，也可以检查已注册变量的字符串内容是否空白：</p>
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+
+
+
+
+</body>
+</html>
+p>可以使用'stdout'值访问已注册变量的字符串内容，也可以检查已注册变量的字符串内容是否空白：</p>
 <pre><code>- name: check registered variable for emptiness
 hosts: all
 tasks:
