@@ -6,10 +6,19 @@
     <description>Recent content in Categories on Pray</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 03 Apr 2020 15:37:22 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 30 Apr 2020 14:08:50 +0800</lastBuildDate>
     
 	<atom:link href="https://hyouka.top/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>python</title>
+      <link>https://hyouka.top/categories/python/</link>
+      <pubDate>Thu, 30 Apr 2020 14:08:50 +0800</pubDate>
+      
+      <guid>https://hyouka.top/categories/python/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>运维</title>

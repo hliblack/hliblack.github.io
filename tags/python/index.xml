@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python on Pray</title>
+    <link>https://hyouka.top/tags/python/</link>
+    <description>Recent content in python on Pray</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 30 Apr 2020 14:08:50 +0800</lastBuildDate>
+    
+	<atom:link href="https://hyouka.top/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>5.函数</title>
+      <link>https://hyouka.top/posts/python/</link>
+      <pubDate>Thu, 30 Apr 2020 14:08:50 +0800</pubDate>
+      
+      <guid>https://hyouka.top/posts/python/</guid>
+      <description>定义函数 def fib2(n): # return Fibonacci series up to n &amp;quot;&amp;quot;&amp;quot;Return a list containing the Fibonacci series up to n.&amp;quot;&amp;quot;&amp;quot; result = [] a, b = 0, 1 while a &amp;lt; n: result.append(a) # see below a, b = b, a+b return result ~~ return 语句会从函数内部返回一个值 result.append(a) 语句调用了列表对象 result 的 方法 。方法是“属于”一个对象的函数 函数定义的更多形式 argument</description>
+    </item>
+    
+    <item>
+      <title>4.流程控制语句</title>
+      <link>https://hyouka.top/posts/python/</link>
+      <pubDate>Thu, 30 Apr 2020 14:06:59 +0800</pubDate>
+      
+      <guid>https://hyouka.top/posts/python/</guid>
+      <description>if 语句 一个 if &amp;hellip; elif &amp;hellip; elif &amp;hellip; 序列可以看作是其他语言中的 switch 或 case 语句的替代。 for 语句 range() 函数 range(i,j) 实际遍历的是 i 到 (j-1) 要以序列的索引来迭代，您可以将 range() 和 len() 组合如下: a = [&#39;Mary&#39;, &#39;had&#39;, &#39;a&#39;, &#39;little&#39;, &#39;lamb&#39;] for i in range(len(a)): ... print(i, a[i]) ... 0 Mary 1 had 2 a 3 little 4 lamb ~~ 然而</description>
+    </item>
+    
+  </channel>
+</rss>

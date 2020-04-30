@@ -10,22 +10,20 @@
         content="hliblack"/>
 
   
-  <meta name="description" content="初学者"/>
+  <meta name="description" content="if 语句 一个 if &amp;hellip; elif &amp;hellip; elif &amp;hellip; 序列可以看作是其他语言中的 switch 或 case 语句的替代。 for 语句 range() 函数 range(i,j) 实际遍历的是 i 到 (j-1) 要以序列的索引来迭代，您可以将 range() 和 len() 组合如下: a = [&#39;Mary&#39;, &#39;had&#39;, &#39;a&#39;, &#39;little&#39;, &#39;lamb&#39;] for i in range(len(a)): ... print(i, a[i]) ... 0 Mary 1 had 2 a 3 little 4 lamb ~~ 然而"/>
   
 
   
   
-  <meta name="keywords" content="ansible, linux, docker"/>
+  <meta name="keywords" content="python"/>
   
 
   
-  <link rel="canonical" href="https://hyouka.top/posts/"/>
+  <link rel="canonical" href="https://hyouka.top/posts/python/"/>
 
   
-  <link rel="alternate" type="application/rss&#43;xml" href="https://hyouka.top/posts/index.xml">
-  
 
-  <title>Posts &middot; Pray</title>
+  <title>4.流程控制语句 &middot; Pray</title>
 
   <link rel="shortcut icon" href="https://hyouka.top/images/favicon.ico"/>
   <link rel="stylesheet" href="https://hyouka.top/css/animate.min.css"/>
@@ -95,57 +93,75 @@
 </div>
 
   <div class="content">
-    <div class="list_with_title">
-      
-      <div class="listing_title">2020</div>
-      <div class="listing">
-        
-        <div class="listing_item">
-          <div class="listing_post">
-            <a href="/posts/python/">5.函数</a>
-            <div class="post_time"><span class="date">04-30</span></div>
-          </div>
+    <div class="post_page">
+      <div class="post animated fadeInDown">
+        <div class="post_title post_detail_title">
+          <h2><a href='/posts/python/'>4.流程控制语句</a></h2>
+          <span class="date">2020.04.30</span>
         </div>
-        
-        <div class="listing_item">
-          <div class="listing_post">
-            <a href="/posts/python/">4.流程控制语句</a>
-            <div class="post_time"><span class="date">04-30</span></div>
+        <div class="post_content markdown"><ol>
+<li>
+<p>if 语句
+一个 if &hellip; elif &hellip; elif &hellip; 序列可以看作是其他语言中的 switch 或 case 语句的替代。</p>
+</li>
+<li>
+<p>for 语句</p>
+</li>
+<li>
+<p>range() 函数
+range(i,j) 实际遍历的是 i 到 (j-1)
+要以序列的索引来迭代，您可以将 range() 和 len() 组合如下:</p>
+<pre><code>a = ['Mary', 'had', 'a', 'little', 'lamb']
+for i in range(len(a)):
+...     print(i, a[i])
+...
+0 Mary
+1 had
+2 a
+3 little
+4 lamb
+</code></pre><p>~~
+然而，在大多数这类情况下，使用 <a href="https://docs.python.org/zh-cn/3.8/library/functions.html#enumerate">enumerate()</a>函数比较方便，请参见 循环的技巧 。</p>
+</li>
+<li>
+<p>break 和 continue 语句，以及循环中的 else 子句
+break 语句：跳出循环。</p>
+<p><strong>循环语句可能带有 else 子句</strong>；它会在循环耗尽了可迭代对象 (使用 for) 或循环条件变为假值 (使用 while) 时被执行，但<strong>不会在循环被 break 语句终止时被执行。</strong> 以下搜索素数的循环就是这样的一个例子:</p>
+<pre><code>for n in range(2, 10):
+    for x in range(2, n):
+        if n % x == 0:
+            print(n, 'equals', x, '*', n//x)
+            break
+    else:
+        # loop fell through without finding a factor
+        print(n, 'is a prime number')
+</code></pre><p>~~
+continue：表示继续循环中的下一次迭代，它会继续执行最近的外层循环的下一个轮次</p>
+</li>
+<li>
+<p>pass 语句
+pass 语句什么也不做。当语法上需要一个语句，但程序需要什么动作也不做时，可以使用它。占位符。</p>
+</li>
+</ol>
+</div>
+        <div class="post_footer">
+          
+          <div class="meta">
+            <div class="info">
+              <span class="field tags">
+                <i class="remixicon-stack-line"></i>
+                
+                <a href="https://hyouka.top/tags/python/">python</a>
+                
+              </span>
+            </div>
           </div>
+          
         </div>
-        
-        <div class="listing_item">
-          <div class="listing_post">
-            <a href="/posts/nextcloud/">搭建 NextCloud &#43; OSS 遇到的问题</a>
-            <div class="post_time"><span class="date">04-03</span></div>
-          </div>
-        </div>
-        
-        <div class="listing_item">
-          <div class="listing_post">
-            <a href="/posts/ansible/">Ansible笔记</a>
-            <div class="post_time"><span class="date">04-03</span></div>
-          </div>
-        </div>
-        
-        <div class="listing_item">
-          <div class="listing_post">
-            <a href="/posts/ansible%E9%85%8D%E7%BD%AE/">Ansible条件判断详解</a>
-            <div class="post_time"><span class="date">03-25</span></div>
-          </div>
-        </div>
-        
-        <div class="listing_item">
-          <div class="listing_post">
-            <a href="/posts/ansible%E9%85%8D%E7%BD%AE/">如何配置Ansible？Ansible三种配置方法详解</a>
-            <div class="post_time"><span class="date">03-19</span></div>
-          </div>
-        </div>
-        
       </div>
       
+      
     </div>
-    <div class="pagination"></div>
   </div>
   <a id="back_to_top" href="#" class="back_to_top"><span>△</span></a>
 </div>
