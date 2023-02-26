@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><search><entry><title>5.函数</title><url>https://hyouka.top/post/python/5.%E5%87%BD%E6%95%B0/</url><categories/><tags><tag>Python</tag></tags><content type="html"> 定义函数
+def fib2(n): # return Fibonacci series up to n """Return a list containing the Fibonacci series up to n.""" result = [] a, b = 0, 1 while a &lt; n: result.append(a) # see below a, b = b, a+b return result ~
+return 语句会从函数内部返回一个值 result.append(a) 语句调用了列表对象 result 的 方法 。方法是“属于”一个对象的函数 函数定义的更多形式
+argument &ndash; 参数 在调用函数时传给 function （或 method ）的值。参数分为两种： 关键字参数: 在函数调用中前面带有标识符（例如 name=）或者作为包含在前面带有 ** 的字典里的值传入。举例来说，3 和 5 在以下对 complex() 的调用中均属于关键字参数: complex(real=3, imag=5) complex(**{&lsquo;real&rsquo;: 3, &lsquo;imag&rsquo;: 5}) 位置参数: 不属于关键字参数的参数。位置参数可出现于参数列表的开头以及/或者作为前面带有 * 的 iterable 里的元素被传入。举例来说，3 和 5 在以下调用中均属于位置参数: complex(3, 5) complex(*(3, 5))
+参数默认值 最有用的形式是对一个或多个参数指定一个默认值。这样创建的函数，可以用比定义时允许的更少的参数调用
+def ask_ok(prompt, retries=4, reminder='Please try again!'): while True: ok = input(prompt) if ok in ('y', 'ye', 'yes'): return True if ok in ('n', 'no', 'nop', 'nope'): return False retries = retries - 1 if retries &lt; 0: raise ValueError('invalid user response') print(reminder) ~ ask('Do you really want quit?') in 关键字。它可以测试一个序列是否包含某个值。 重要警告： 默认值只会执行一次。这条规则在默认值为可变对象（列表、字典以及大多数类实例）时很重要。比如，下面的函数会存储在后续调用中传递给它的参数:
+def f(a, L=[]): L.append(a) return L print(f(1)) print(f(2)) print(f(3)) ~ 这将打印出
+[1] [1, 2] [1, 2, 3] 如果你不想要在后续调用之间共享默认值，你可以这样写这个函数:
+def f(a, L=None): if L is None: L = [] L.append(a) return L ~
+关键字参数 在函数调用中，关键字参数必须跟随在位置参数的后面。
+当存在一个形式为 **name 的最后一个形参时，它会接收一个字典 (参见 映射类型 &mdash; dict)，其中包含除了与已有形参相对应的关键字参数以外的所有关键字参数。 这可以与一个形式为 *name，接收一个包含除了与已有形参列表以外的位置参数的 元组 的形参 (将在下一小节介绍) 组合使用 (*name 必须出现在 **name 之前。) 例如，如果我们这样定义一个函数:
+def cheeseshop(kind, *arguments, **keywords): print("-- Do you have any", kind, "?") print("-- I'm sorry, we're all out of", kind) for arg in arguments: print(arg) print("-" * 40) for kw in keywords: print(kw, ":", keywords[kw]) ~ 它可以像这样调用:
+cheeseshop("Limburger", "It's very runny, sir.", "It's really very, VERY runny, sir.", shopkeeper="Michael Palin", client="John Cleese", sketch="Cheese Shop Sketch") ` 当然它会打印:
+&ndash; Do you have any Limburger ? &ndash; I&rsquo;m sorry, we&rsquo;re all out of Limburger It&rsquo;s very runny, sir.
+It&rsquo;s really very, VERY runny, sir. shopkeeper : Michael Palin client : John Cleese sketch : Cheese Shop Sketch</content></entry><entry><title>Ansible条件判断详解</title><url>https://hyouka.top/post/ansible/ansible%E6%9D%A1%E4%BB%B6%E5%88%A4%E6%96%AD%E8%AF%A6%E8%A7%A3/</url><categories/><tags><tag>ansible</tag></tags><content type="html"> Ansible条件判断详解
+&mdash;&ndash;2019.05.25 1、when 条件判断 绝大多数语言中，都使用"if"作为条件判断的关键字，而在ansible中，条件判断的关键字是"when"，一个简单的"when"条件判断：
+tasks: - name: "shut down Debian flavored systems" command: /sbin/shutdown -t now when: ansible_facts['os_family'] == "Debian" # note that all variables can be used directly in conditionals without double curly braces 使用 when 时，变量名不需要双大括号“{{}}”。
+在上述两个示例中，我们使用了 &ldquo;==&rdquo; 和 &ldquo;>&rdquo; 两个比较运算符，在 Ansible 中，我们可以使用jinja2的比较运算符，如下：
+== :比较两个对象是否相等，相等为真 != :比较两个对象是否不等，不等为真 > :比较两个值的大小，如果左边的值大于右边的值，则为真 &lt; :比较两个值的大小，如果左边的值小于右边的值，则为真 >= :比较两个值的大小，如果左边的值大于右边的值或左右相等，则为真 &lt;= :比较两个值的大小，如果左边的值小于右边的值或左右相等，则为真 可以使用小括号控制条件的优先级：
+tasks: - name: "shut down CentOS 6 and Debian 7 systems" command: /sbin/shutdown -t now when: (ansible_facts['distribution'] == "CentOS" and ansible_facts['distribution_major_version'] == "6") or (ansible_facts['distribution'] == "Debian" and ansible_facts['distribution_major_version'] == "7") Ansible 使用的逻辑运算符有：
+and :逻辑与，当左边与右边同时为真，则返回真 or :逻辑或，当左边与右边有任意一个为真，则返回真 not :取反，对一个操作体取反 逻辑与也可以使用列表表示：
+tasks: - name: "shut down CentOS 6 systems" command: /sbin/shutdown -t now when: - ansible_facts['distribution'] == "CentOS" - ansible_facts['distribution_major_version'] == "6" 2、条件判断与 tests Ansible 可以使用 jinja2 的 tests 和 filters，如下：
+tasks:-command:/bin/falseregister:resultignore_errors:True-command:/bin/somethingwhen:resultisfailed# In older versions of ansible use ``success``, now both are valid but succeeded uses the correct tense. -command:/bin/something_elsewhen:resultissucceeded-command:/bin/still/something_elsewhen:resultisskipped可以使用 debug 模块打印可用的 facts：
+- debug: var=ansible_facts 可以做算术运算：
+tasks: - shell: echo "only on Red Hat 6, derivatives, and later" when: ansible_facts['os_family'] == "RedHat" and ansible_facts['lsb']['major_release']|int >= 6 输出“lsb major_release”需要 lsb_release 软件包。 使用变量：
+vars: epic: true tasks: - shell: echo "This certainly is epic!" when: epic tasks: - shell: echo "This certainly isn't epic!" when: not epic 使用 jinja2 的 tests：defined：
+tasks: - shell: echo "I've got '{{ foo }}' and am not afraid to use it!" when: foo is defined - fail: msg="Bailing out. this play requires 'bar'" when: bar is undefined 判断变量的 tests defined ：判断变量是否已经定义，已经定义则返回真 undefind ：判断变量是否已经定义，未定义则返回真 none ：判断变量值是否为空，如果变量已经定义，但是变量值为空，则返回真 判断执行结果的 tests success 或 succeeded：通过任务的返回信息判断任务的执行状态，任务执行成功则返回真 failure 或 failed：通过任务的返回信息判断任务的执行状态，任务执行失败则返回真 change 或 changed：通过任务的返回信息判断任务的执行状态，任务执行状态为changed则返回真 skip 或 skipped：通过任务的返回信息判断任务的执行状态，当任务没有满足条件，而被跳过执行时，则返回真 判断路径的 tests 注：如下tests的判断均针对于ansible主机中的路径，与目标主机无关 file : 判断路径是否是一个文件，如果路径是一个文件则返回真 directory ：判断路径是否是一个目录，如果路径是一个目录则返回真 link ：判断路径是否是一个软链接，如果路径是一个软链接则返回真 mount：判断路径是否是一个挂载点，如果路径是一个挂载点则返回真 exists：判断路径是否存在，如果路径存在则返回真 判断字符串的 tests lower：判断包含字母的字符串中的字母是否是纯小写，字符串中的字母全部为小写则返回真 upper：判断包含字母的字符串中的字母是否是纯大写，字符串中的字母全部为大写则返回真 判断整除的 tests even ：判断数值是否是偶数，是偶数则返回真 odd ：判断数值是否是奇数，是奇数则返回真 divisibleby(num) ：判断是否可以整除指定的数值，如果除以指定的值以后余数为0，则返回真 其他一些 tests version：可以用于对比两个版本号的大小，或者与指定的版本号进行对比，使用语法为 version('版本号', '比较操作符') subset：判断一个list是不是另一个list的子集，是另一个list的子集时返回真 superset : 判断一个list是不是另一个list的父集，是另一个list的父集时返回真 number：判断对象是否是一个数字，是数字则返回真 3、条件判断和 register 调用shell模块运行命令时，通常需要获取到shell模块的返回信息，以便之后的模块能够根据返回信息的值判断之后进行怎样的操作，这时可以使用 register 关键字。register 关键字决定保存结果的变量，结果变量可用于模板，操作行或when语句。例如：
+- name: test play hosts: all tasks: - shell: cat /etc/motd register: motd_contents - shell: echo "motd contains the word hi" when: motd_contents.stdout.find('hi') != -1 如前所示，可以使用&rsquo;stdout&rsquo;值访问已注册变量的字符串内容。如果将注册结果转换为列表（或已经是列表），则可以在任务的循环中使用该注册结果，如下所示。在这个对象中可以用“stdout_lines”，也可以调用“home_dirs.stdout.split（）”，并且可以通过其他字段拆分：
+- name: registered variable usage as a loop list hosts: all tasks: - name: retrieve the list of home directories command: ls /home register: home_dirs - name: add home dirs to the backup spooler file: path: /mnt/bkspool/{{ item }} src: /home/{{ item }} state: link loop: "{{ home_dirs.stdout_lines }}" # same as loop: "{{ home_dirs.stdout.split() }}" 可以使用&rsquo;stdout&rsquo;值访问已注册变量的字符串内容，也可以检查已注册变量的字符串内容是否空白：
+- name: check registered variable for emptiness hosts: all tasks: - name: list contents of directory command: ls mydir register: contents - name: check contents for emptiness debug: msg: "Directory is empty" when: contents.stdout == "" 如果 mydir 目录不存在，ls mydir语句报错，playbook 执行停止，这时可以使用 ignore_errors 关键字。ignore_errors: true表示即使当前 task 执行报错，Ansible 也会忽略这个错误，继续执行 playbook：
+- name: check registered variable hosts: all tasks: - name: list contents of directory command: ls mydir register: contents ignore_errors: true - name: mydir exists debug: msg: "Command execution successful" when: contents.rc == 0 - name: mydir does not exist debug: msg: "Command execution failed" when: contents.rc != 0 4、条件判断与block block 允许逻辑分组任务和错误处理，可以在 block 中应用大多数可应用于单个任务（循环除外）的任务，这使得设置任务共有的数据或指令变得更加容易。
+block 用于分组任务 tasks: - name: Install, configure, and start Apache block: - name: install httpd and memcached yum: name: "{{ item }}" state: present loop: - httpd - memcached - name: apply the foo config template template: src: templates/src.j2 dest: /etc/foo.conf - name: start service bar and enable it service: name: bar state: started enabled: True when: ansible_facts['distribution'] == 'CentOS' become: true become_user: root ignore_errors: yes block 用于错误处理 block 还引入了以类似于大多数编程语言中的异常的方式处理错误的能力，block 仅处理 tasks 的“失败”，不包括错误的任务定义或主机无法访问。
+tasks: - name: Handle the error block: - debug: msg: 'I execute normally' - name: i force a failure command: /bin/false - debug: msg: 'I never execute, due to the above task failing, :-(' rescue: - debug: msg: 'I caught an error, can do stuff here to fix it, :-)' 除了 block 关键字，还有另外一个关键字 rescue，rescue 关键字与 block 关键字同级，rescue 的字面意思为"救援"，表示当 block 中的任务执行失败时，会执行 rescue 中的任务进行补救，这将“恢复”运行任务的失败状态，并且 playbook 将继续，就像它已成功一样。
+rescue 关键字可用的变量：
+ansible_failed_task：The task that returned ‘failed’ and triggered the rescue. For example, to get the name use ansible_failed_task.name. ansible_failed_result：The captured return result of the failed task that triggered the rescue. This would equate to having used this var in the register keyword. 可以使用 always 关键字，加入 always 关键字以后，无论 block 中的任务执行成功还是失败，always 中的任务都会被执行，示例如下：
+- name: Always do X block: - debug: msg: 'I execute normally' - name: i force a failure command: /bin/false - debug: msg: 'I never execute :-(' always: - debug: msg: "This always executes, :-)" 一个复杂的错误处理：
+- name: Attempt and graceful roll back demo block: - debug: msg: 'I execute normally' - name: i force a failure command: /bin/false - debug: msg: 'I never execute, due to the above task failing, :-(' rescue: - debug: msg: 'I caught an error' - name: i force a failure in middle of recovery! >:-) command: /bin/false - debug: msg: 'I also never execute :-(' always: - debug: msg: "This always executes" 还可以在 block 中执行 handlers：
+tasks: - name: Attempt and graceful roll back demo block: - debug: msg: 'I execute normally' changed_when: yes notify: run me even after an error - command: /bin/false rescue: - name: make sure all handlers run meta: flush_handlers handlers: - name: run me even after an error debug: msg: 'This handler runs even on error' 5、条件判断与错误处理 fail模块：
+- hosts: test70 remote_user: root tasks: - shell: "echo 'This is a string for testing--error'" register: return_value - fail: msg: "Conditions established,Interrupt running playbook" when: "'error' in return_value.stdout" - debug: msg: "I never execute,Because the playbook has stopped" 我们使用shell模块故意输出了一个包含&rsquo;error&rsquo;字符串的文本，并且将shell模块执行后的返回值注册到了变量' return_value&rsquo;中，在之后调用了fail模块，并对fail模块添加了判断条件，对应的条件为 &ldquo;&lsquo;error&rsquo; in return_value.stdout&rdquo;，这个条件表示shell模块执行后的标注输出信息中如果包含&rsquo;error&rsquo;字符串，则条件成立，其中，&lsquo;in&rsquo;关键字的用法与python中&rsquo;in&rsquo;的用法相同，可以使用&rsquo;in&rsquo;关键字判断一个字符串是否存在于另一个字符串中，也可以用于判断一个特定的值是否存在于列表中，由于shell标准输出的信息中的确包含error字符串，所以fail模块对应的条件成立，最终调用fail模块，playbook终止运行。不过需要注意的是，当使用"in"或者"not in"进行条件判断时，整个条件需要用引号引起，并且，需要判断的字符串也需要使用引号引起，所以，使用&rsquo;in&rsquo;或者&rsquo;not in&rsquo;进行条件判断时，如下两种语法是正确的：
+when: ' "successful" not in return_value.stdout ' when: " 'successful' not in return_value.stdout " 借助&rsquo;failed_when&rsquo;关键字来完成类似功能，&lsquo;failed_when&rsquo;的作用就是，当对应的条件成立时，将对应任务的执行状态设置为失败：
+- hosts: test70 remote_user: root tasks: - debug: msg: "I execute normally" - shell: "echo 'This is a string for testing error'" register: return_value failed_when: ' "error" in return_value.stdout' - debug: msg: "I never execute,Because the playbook has stopped" 理解了&rsquo; failed_when&rsquo;关键字以后，顺势理解&rsquo;changed_when&rsquo;关键字就容易多了：
+' failed_when&rsquo;关键字的作用是在条件成立时，将对应任务的执行状态设置为失败
+&lsquo;changed_when&rsquo;关键字的作用是在条件成立时，将对应任务的执行状态设置为changed
+- hosts: test70 remote_user: root tasks: - debug: msg: "test message" changed_when: 2 > 1 我们知道，debug模块在正常执行的情况下只能是"ok"状态，上例中，我们使用&rsquo;changed_when&rsquo;关键字将debug模块的执行后的状态定义为了"changed"
+前文中总结过handlers的用法，我们知道，只有任务作出了实际的操作时（执行后状态为changed），才会真正的执行对应的handlers，而在某些时候，如果想要通过任务执行后的返回值将任务的最终执行状态判定为changed，则可以使用&rsquo;changed_when&rsquo;关键字，以便条件成立时，可以执行对应的handlers，其实，&lsquo;changed_when&rsquo;除了能够在条件成立时将任务的执行状态设置为"changed"，还能让对应的任务永远不能是changed状态，示例如下：
+- hosts: test70 remote_user: root tasks: - shell: "ls /opt" changed_when: false 当将&rsquo;changed_when&rsquo;直接设置为false时，对应任务的状态将不会被设置为&rsquo;changed&rsquo;，如果任务原本的执行状态为&rsquo;changed&rsquo;，最终则会被设置为&rsquo;ok&rsquo;，所以，上例playbook执行后，shell模块的执行状态最终为&rsquo;ok'。
+参考文档
+Ansible Docs » Conditionals
+ansible笔记（29）：条件判断与错误处理
+Ansible
+CICD</content></entry><entry><title>Ansible笔记</title><url>https://hyouka.top/post/ansible/ansible%E7%AC%94%E8%AE%B0/</url><categories/><tags><tag>ansible</tag></tags><content type="html"> ansible 安装
+主控端：
+apt install python-pip -y
+yum install python-pip -y
+easy_istall python-pip //macOS
+pip install -U pip //升级pip
+pip install ansible
+被控端(需要依赖 OpenSSH server 和 Python )：
+apt install openssh-server python2.7 -y
+yum install -y openssl-server python
+配置 默认配置文件路径：/etc/ansible/ 通常会将 ansible.cfg 和 hosts 这两个档案与其它的 Playbooks 放在同个专案目录底下，然后通过版本控制系统 (例如 Git) 把它们一起储存起来，以实现 Ansible 的 Infrastructure as Code（基础设施代码）！
+“基础设施即代码”是一种通过代码来定义计算和网络基础设施的方法，它可以应用于任何软件系统中。这样的代码放在源代码管理中，具有可审查性、可重用型，并且符合测试惯例，还完全遵从持续交付的原则。
+inventory 是什么？ inventory 就单字本身有详细目录、清单和列表的意思。在这里我们可以把它当成是一份主机列表，我们可通过它对定义每个 Managed Node 的代号、IP 位址、连线相关资讯和群组。 Playbook PlayBooks 是 Ansible 的脚本（Script），是比传统 Shell Script 更加结构化的脚本语言。
+Play：通常为某个特定的目的，例如： Setup a official website with wordpress（借由 wordpress建立官网） Retart the API Services（重启 API 服务） Task：是要实现 Play 这个目的所需要做的每个步骤，例如： Install the Apache（安装 Apache） Install the MySQL Moudule：Ansible 所提供的各种操作方法，例如： apt：name=vim state=present（使用 apt 套件安装 vim） command： /sbin/shutdown -r now (使用 shutdown 的命令重启) Task 列表 每一个 play 包含了一个 task 列表（任务列表）.一个 task 在其所对应的所有主机上（通过 host pattern 匹配的所有主机）执行完毕之后,下一个 task 才会执行.有一点需要明白的是（很重要）,在一个 play 之中,所有 hosts 会获取相同的任务指令,这是 play 的一个目的所在,也就是将一组选出的 hosts 映射到 task。 在运行 playbook 时（从上到下执行）,如果一个 host 执行 task 失败,这个 host 将会从整个 playbook 的 rotation 中移除。 每一个 task 必须有一个名称 name,这样在运行 playbook 时,从其输出的任务执行信息中可以很好的辨别出是属于哪一个 task 的。
+tasks:
+- name: make sure apache is running
+service: name=httpd state=running
+Handlers: 在发生改变时执行的操作 ‘notify’ actions 会在 playbook 的每一个 task 结束时被触发,而且即使有多个不同的 task 通知改动的发生, ‘notify’ actions 只会被触发一次.
+- name: template configuration file
+template: src=template.j2 dest=/etc/foo.conf
+notify:
+- restart memcached
+- restart apache
+//‘notify’ 下列出的即是 handlers.
+Handlers 最佳的应用场景是用来重启服务,或者触发系统重启操作。
+模块 模块努力使自身幂等,这意味着它们会尽可能避免对系统做出改动除非那是必须的
+- name: reboot the servers
+command: /sbin/reboot -t now
+每个模块的文档能够通过命令行的 ansible-doc 工具来获取:
+ansible-doc yum //获取yum模块的文档
+ansible-doc -l //列出所有已安装的模块文档</content></entry><entry><title>如何配置Ansible？Ansible三种配置方法详解</title><url>https://hyouka.top/post/ansible/%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AEansibleansible%E4%B8%89%E7%A7%8D%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3/</url><categories/><tags><tag>ansible</tag></tags><content type="html"> 如何配置Ansible？Ansible三种配置方法详解 引用自：运维有道 2018.12.30 文章 如何配置Ansible？Ansible三种配置方法详解
+前面我们学会了如何安装Ansible管理节点，这里我们来看看如何配置Ansible。有三种方式可以修改Ansible配置：
+配置文件，Ansible默认的配置文件是/etc/ansible/ansible.cfg文件； 环境变量，如设置环境变量ANSIBLE_REMOTE_USER=admin表示使用admin登录被管理节点。环境变量设置的参数会覆盖Ansible配置文件中对应的参数； 命令行参数，如ansible命令的“-i”指定主机清单文件，“-m”指定执行的模块，“-a”指定传递给模块的参数。命令行设置的参数会覆盖配置文件盒环境变量中对应的参数。 通过配置文件配置Ansible Ansible配置文件的文件名为ansible.cfg，通过配置文件设置的参数应该是对系统中大多数用户都有效的参数。Ansible按下面的顺序搜索配置文件，第一个搜索到的配置文件起作用，后面的被忽略： - ANSIBLE_CONFIG (如果设置了该环境变量) - ansible.cfg (当前目录) - ~/.ansible.cfg (当前用户的home目录) - /etc/ansible/ansible.cfg
+ansible.cfg是一个ini格式的文件，“#”和“;”开头的行都被当做注释，然而在行尾注释的话只能使用“;”。 如果其他用户对当前目录有写的权限，使用当前目录的ansible.cfg配置文件有安全风险，所以Ansible不会自动加载该配置文件，如果必须使用的话，可以使用ANSIBLE_CONFIG环境变量指定使用该配置文件。 Ansible配置参数参考Ansible官方文档 Docs » Ansible Configuration Settings » Common Options。
+通过环境变量配置Ansible 部分配置参数可以通过环境变量设置，比如DEFAULT_SUDO_USER修改sudo的用户，DEFAULT_ASK_SUDO_PASS设置使用sudo命令时是否提示输入密码。更多环境变量参数参考Ansible官方文档 Docs » Ansible Configuration Settings » Environment Variables。
+ansible.cfg配置项说明 ansible.cfg配置文件通过分块来定义各项参数，以[分块名称]表示，常用的分块有： - [defaults]：定义一些通用的参数； - [privilege_escalation]：定义一些提升权限的参数； - [ssh_connection]：定义SSH的配置参数； - [galaxy]：定义role相关的参数； - [inventory]：定义主机清单的参数； - [paramiko_connection]：定义Python的paramiko模块相关的参数； - [persistent_connection]：定义持久化连接相关的参数； - [jinja2]：定义jinja2模板引擎相关的参数； - [selinux]：定义SELinux相关参数。
+ansible-config命令查看配置参数 可以使用Ansible自带的ansible-config命令方便地查看当前生效的配置参数以及配置参数的说明。
+语法 ansible-config [view|dump|list] [--help] [options] [ansible.cfg] 描述 查看Ansible的配置参数的工具。
+参数 –version：显示软件版本。 -c , –config ：指定配置文件路径。 -h, –help：查看帮助信息。 -v, –verbose：输出调试信息，-vvv输出更多信息，-vvvv输出连接调试信息。 动作 list：列出所有配置参数并且显示参数的默认值、描述、值的类型和在环境变量、配置文件（ini和yaml）中如何设置。 dump：输出当前的配置参数，如果指定了其他配置文件则同时读取该配置文件中的参数。 view：输出当前使用的配置文件的内容，添加“-v”选项也输出当前使用的配置文件路径。 示例 1）ansible-config list的用法。list其实借助了less命令，可以使用“/string”搜索“string”，使用h、j、k、l等移动光标，还可以使用h查看帮助。
+[admin@ityoudao ~]$ ansible-config list ACTION_WARNINGS: default: true description: [By default Ansible will issue a warning when received from a task action (module or action plugin), These warnings can be silenced by adjusting this setting to False.] env: - {name: ANSIBLE_ACTION_WARNINGS} ini: - {key: action_warnings, section: defaults} name: Toggle action warnings type: boolean version_added: '2.5' ... 2）ansible-config dump的用法：输出默认ansible.cfg配置文件中的参数以及未设置的参数的默认值。
+[admin@ityoudao ~]$ ansible-config dump ACTION_WARNINGS(default) = True AGNOSTIC_BECOME_PROMPT(default) = True ALLOW_WORLD_READABLE_TMPFILES(default) = False ANSIBLE_CONNECTION_PATH(default) = None ANSIBLE_COW_PATH(default) = None ANSIBLE_COW_SELECTION(default) = default ... 3）ansible-config dump添加“–only-changed”只输出修改了的参数，添加“-c /somepath/ansible.cfg”同时读取该配置文件中的参数。
+[admin@ityoudao ~]$ ansible-config dump --only-changed -c /u01/admin/ansible.cfg DEFAULT_REMOTE_USER(/u01/admin/ansible.cfg) = admin HOST_KEY_CHECKING(/u01/admin/ansible.cfg) = False 4）ansible-config view的用法。
+[admin@ityoudao ~]$ ansible-config view -v Using /home/admin/ansible.cfg as config file [defaults] ANSIBLE_REMOTE_USER=admin Ansible
+CICD</content></entry><entry><title>搭建 NextCloud + OSS 遇到的问题</title><url>https://hyouka.top/post/%E6%90%AD%E5%BB%BA-nextcloud-+-oss-%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</url><categories/><tags><tag>OSS</tag></tags><content type="html"> 问题一：OnlyOffice DocumentServer 设置 https 问题 根据 Dockerhub 上的 documentserver 使用描述，可使用自签名证书，但在 nextcloud 中使用时无法使用，解决方案有以下两种：
+更改 nextcloud 的config.php 文件，添加``` &lsquo;onlyoffice&rsquo; => array ( &lsquo;verify_peer_off&rsquo; =>TRUE, ),
+该设置不会检测证书是否和有效，因此可在onlyoffice插件中填入 https://ip:port/
+保存后可进行在线编辑，但是即使 nexcloud 设置了 SSL，在使用 onlyoffice 在线编辑后浏览器仍然会显示 SSL 不安全。 > 参考链接：[Nextcloud ONLYOFFICE integration app](https://api.onlyoffice.com/editors/nextcloud "https://api.onlyoffice.com/editors/nextcloud") 从 OnlyOffice DocumentServer 容器解决，将 NextCloud 的证书用于 documentserver 容器，需要注意的是，docker run 运行指定证书路径时，使用的是容器内部的路径
+docker run -itd -p 9003:443 \ -v /etc/letsencrypt/archive/nextcloud.example.com:/var/www/onlyoffice/Data \ -e SSL_CERTIFICATE_PATH=/var/www/onlyoffice/Data/cert1.pem \ -e SSL_KEY_PATH=/var/www/onlyoffice/Data/privkey1.pem onlyoffice/documentserver 参考链接：onlyoffice/documentserver
+问题二：OSS 挂载问题 如何挂载？ 参考阿里云官方文档：快速安装和配置 ossfs
+挂载注意事项： 目录结构问题：
+使用外部存储挂载 挂载到 nextcloud 目录，如果 oss 原本就有数据，则需要将数据目录放到 nextcloud 用户目录下去，然后在服务器 nextcloud 根目录下执行 sudo -u apache php occ files:scan --all 命令才能在前端正确显示。 sudo -u apache php occ files:scan &ndash;all 也可以只指定单个用户，如：sudo -u apache php occ files:scan &ndash;admin
+执行 sudo -u apache php occ files:scan 出错：
+Exception during scan: File entry could not be inserted but could also not be selected with getId() in order to perform an update. Please try again.
+出错时，先执行：sudo -u apache php -f ./cron.php
+问题三：新建用户在OSS里没有用户目录问题 NextCloud 中新建用户会在首次登陆时自动生成用户目录。</content></entry><entry><title>流程控制语句</title><url>https://hyouka.top/post/python/4.%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5/</url><categories/><tags><tag>Python</tag></tags><content type="html"> if 语句 一个 if &hellip; elif &hellip; elif &hellip; 序列可以看作是其他语言中的 switch 或 case 语句的替代。
+for 语句
+range() 函数 range(i,j) 实际遍历的是 i 到 (j-1) 要以序列的索引来迭代，可以将 range() 和 len() 组合如下:
+a = ['Mary', 'had', 'a', 'little', 'lamb'] for i in range(len(a)): ... print(i, a[i]) ... 0 Mary 1 had 2 a 3 little 4 lamb ~ 然而，在大多数这类情况下，使用 enumerate()
+函数比较方便，请参见 循环的技巧 。
+break 和 continue 语句，以及循环中的 else 子句 break 语句：跳出循环。
+循环语句可能带有 else 子句；它会在循环耗尽了可迭代对象 (使用 for) 或循环条件变为假值 (使用 while) 时被执行，但不会在循环被 break 语句终止时被执行。 以下搜索素数的循环就是这样的一个例子:
+for n in range(2, 10): for x in range(2, n): if n % x == 0: print(n, 'equals', x, '*', n//x) break else: # loop fell through without finding a factor print(n, 'is a prime number') ~ continue：表示继续循环中的下一次迭代，它会继续执行最近的外层循环的下一个轮次
+pass 语句 pass 语句什么也不做。当语法上需要一个语句，但程序需要什么动作也不做时，可以使用它。占位符。</content></entry><entry><title>目录</title><url>https://hyouka.top/post/ansible/%E7%9B%AE%E5%BD%95/</url><categories/><tags><tag>ansible</tag></tags><content type="html"> 如何配置Ansible？Ansible三种配置方法详解
+Ansible笔记
+Ansible条件判断详解</content></entry><entry><title>目录</title><url>https://hyouka.top/post/java/%E7%9B%AE%E5%BD%95/</url><categories/><tags><tag>Java</tag></tags><content type="html"> JavaSE JavaWeb Spring Spring MVC Spring Boot</content></entry><entry><title>目录</title><url>https://hyouka.top/post/python/%E7%9B%AE%E5%BD%95/</url><categories/><tags><tag>Python</tag></tags><content type="html"> 4.流程控制语句
+5.函数</content></entry><entry><title>Markdown语法手册</title><url>https://hyouka.top/post/markdown-syntax/</url><categories><category>themes</category><category>syntax</category></categories><tags><tag>markdown</tag><tag>css</tag><tag>html</tag></tags><content type="html"> 本文提供了一个可以在 Hugo 内容文件中使用的基本Markdown语法示例，还展示了基本 HTML 元素在 Hugo 主题中是否使用 CSS 装饰。
+标题 下面的 HTML 代码&lt;h1>—&lt;h6> 元素表示六个级别的节标题。 &lt;h1>是最高的节级别，&lt;h6>是最低的节级别。
+H1 H2 H3 H4 H5 H6 段落 Xerum, quo qui aut unt expliquam qui dolut labo. Aque venitatiusda cum, voluptionse latur sitiae dolessi aut parist aut dollo enim qui voluptate ma dolestendit peritin re plis aut quas inctum laceat est volestemque commosa as cus endigna tectur, offic to cor sequas etum rerum idem sintibus eiur? Quianimin porecus evelectur, cum que nis nust voloribus ratem aut omnimi, sitatur? Quiatem. Nam, omnis sum am facea corem alique molestrunt et eos evelece arcillit ut aut eos eos nus, sin conecerem erum fuga. Ri oditatquam, ad quibus unda veliamenimin cusam et facea ipsamus es exerum sitate dolores editium rerore eost, temped molorro ratiae volorro te reribus dolorer sperchicium faceata tiustia prat.
+伊塔图？厨房里有很多东西，我不知道他们喜欢吃什么，或者他们喜欢吃什么。
+引用 blockquote元素表示从另一个来源引用的内容，可选的引用必须在footer或cite元素内，也可选的内嵌更改，如注释和缩写。
+引用没有归属 Tiam, ad mint andaepu dandae nostion secatur sequo quae. 注意 可以在块引用中使用 Markdown 语法。
+带归属的引用 不要通过分享记忆来交流，通过交流来分享记忆。
+— 罗布·派克1
+表格 表不是Markdown核心规范的一部分，但是Hugo支持开箱即用。
+Name Age Bob 27 Alice 23 表格内使用Markdown语法 Italics Bold Code italics bold code 图像 ![图像描述](图像地址) 示例 Google Chrome Firefox Browser
+点击图像可以打开图像浏览器，快试试吧。
+代码块 带有引号的代码块 &lt;!doctype html> &lt;html lang="en"> &lt;head> &lt;meta charset="utf-8"> &lt;title>Example HTML5 Document&lt;/title> &lt;/head> &lt;body> &lt;p>Test&lt;/p> &lt;/body> &lt;/html> 用四个空格缩进的代码块 &lt;!doctype html>
+&lt;html lang="en">
+&lt;head>
+&lt;meta charset="utf-8">
+&lt;title>Example HTML5 Document&lt;/title>
+&lt;/head>
+&lt;body>
+&lt;p>Test&lt;/p>
+&lt;/body>
+&lt;/html>
+代码块引用Hugo的内部高亮短代码 &lt;!doctype html> &lt;html lang="en"> &lt;head> &lt;meta charset="utf-8"> &lt;title>Example HTML5 Document&lt;/title> &lt;/head> &lt;body> &lt;p>Test&lt;/p> &lt;/body> &lt;/html> 列表类型 有序列表 First item Second item Third item 无序列表 List item Another item And another item 嵌套列表 Fruit Apple Orange Banana Dairy Milk Cheese 其他元素 — abbr, sub, sup, kbd, mark GIF 是位图图像格式。
+H2O
+Xn + Yn = Zn
+按 CTRL+ALT+Delete 组合键结束会话。
+大多数蝾螈在夜间活动，捕食昆虫、蠕虫和其他小动物。
+以上引文摘自Rob Pike在2015年11月18日Gopherfest上的演讲
+。&#160;&#8617;&#xfe0e;</content></entry><entry><title>占位符文本显示</title><url>https://hyouka.top/post/placeholder-text/</url><categories/><tags><tag>markdown</tag><tag>text</tag></tags><content type="html"> 你对我的心有偏见。我向您保证，我们的生活将不会受到影响，我们的生活将会受到影响。你说你现在住在医院里，因为你的眼睛是透明的，你的眼睛是光明的，你的眼睛是光明的!
+Exierant elisi ambit vivere dedere Duce pollice Eris modo Spargitque ferrea quos palude Rursus nulli murmur; hastile inridet ut ab gravi sententia! Nomine potitus silentia flumen, sustinet placuit petis in dilapsa erat sunt. Atria tractus malis.
+Comas hunc haec pietate fetum procerum dixit Post torum vates letum Tiresia Flumen querellas Arcanaque montibus omnes Quidem et Vagus elidunt
+The Van de Graaf Canon
+Mane refeci capiebant unda mulcebat Victa caducifer, malo vulnere contra dicere aurato, ludit regale, voca! Retorsit colit est profanae esse virescere furit nec; iaculi matertera et visa est, viribus. Divesque creatis, tecta novat collumque vulnus est, parvas. Faces illo pepulere tempus adest. Tendit flamma, ab opes virum sustinet, sidus sequendo urbis.
+Iubar proles corpore raptos vero auctor imperium; sed et huic: manus caeli Lelegas tu lux. Verbis obstitit intus oblectamina fixis linguisque ausus sperare Echionides cornuaque tenent clausit possit. Omnia putatur. Praeteritae refert ausus; ferebant e primus lora nutat, vici quae mea ipse. Et iter nil spectatae vulnus haerentia iuste et exercebat, sui et.
+Eurytus Hector, materna ipsumque ut Politen, nec, nate, ignari, vernum cohaesit sequitur. Vel mitis temploque vocatus, inque alis, oculos nomen non silvis corpore coniunx ne displicet illa. Crescunt non unus, vidit visa quantum inmiti flumina mortis facto sic: undique a alios vincula sunt iactata abdita! Suspenderat ego fuit tendit: luna, ante urbem Propoetides parte.</content></entry><entry><title>数据公式设置显示</title><url>https://hyouka.top/post/math-typesetting/</url><categories/><tags/><content type="html"> Hugo项目中的数学表示法可以通过使用第三方JavaScript库来实现。
+在这个例子中，我们将使用 MathJax
+Create a post under /content/en[zh-CN]/math.md
+可以全局启用MathJax，请在项目配置中将参数math设置为true
+或是在每页基础上启用MathJax，在内容文件中包括参数math: true
+注意： 使用支持的TeX功能
+的联机参考资料
+例子 重复的分数 $$ \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} \equiv 1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\frac{e^{-6\pi}} {1+\frac{e^{-8\pi}} {1+\cdots} } } } $$
+总和记号 $$ \left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right) $$
+几何级数之和 我把接下来的两个例子分成了几行，这样它在手机上表现得更好。这就是为什么它们包含 \displaystyle。
+$$ \displaystyle\sum_{i=1}^{k+1}i $$
+$$ \displaystyle= \left(\sum_{i=1}^{k}i\right) +(k+1) $$
+$$ \displaystyle= \frac{k(k+1)}{2}+k+1 $$
+$$ \displaystyle= \frac{k(k+1)+2(k+1)}{2} $$
+$$ \displaystyle= \frac{(k+1)(k+2)}{2} $$
+$$ \displaystyle= \frac{(k+1)((k+1)+1)}{2} $$
+乘记号 $$ \displaystyle 1 + \frac{q^2}{(1-q)}+\frac{q^6}{(1-q)(1-q^2)}+\cdots = \displaystyle \prod_{j=0}^{\infty}\frac{1}{(1-q^{5j+2})(1-q^{5j+3})}, \displaystyle\text{ for }\lvert q\rvert &lt; 1. $$
+随文数式 这是一些线性数学: $$ k_{n+1} = n^2 + k_n^2 - k_{n-1} $$ ， 然后是更多的文本。
+希腊字母 $$ \Gamma\ \Delta\ \Theta\ \Lambda\ \Xi\ \Pi\ \Sigma\ \Upsilon\ \Phi\ \Psi\ \Omega \alpha\ \beta\ \gamma\ \delta\ \epsilon\ \zeta\ \eta\ \theta\ \iota\ \kappa\ \lambda\ \mu\ \nu\ \xi \ \omicron\ \pi\ \rho\ \sigma\ \tau\ \upsilon\ \phi\ \chi\ \psi\ \omega\ \varepsilon\ \vartheta\ \varpi\ \varrho\ \varsigma\ \varphi $$
+箭头 $$ \gets\ \to\ \leftarrow\ \rightarrow\ \uparrow\ \Uparrow\ \downarrow\ \Downarrow\ \updownarrow\ \Updownarrow $$
+$$ \Leftarrow\ \Rightarrow\ \leftrightarrow\ \Leftrightarrow\ \mapsto\ \hookleftarrow \leftharpoonup\ \leftharpoondown\ \rightleftharpoons\ \longleftarrow\ \Longleftarrow\ \longrightarrow $$
+$$ \Longrightarrow\ \longleftrightarrow\ \Longleftrightarrow\ \longmapsto\ \hookrightarrow\ \rightharpoonup $$
+$$ \rightharpoondown\ \leadsto\ \nearrow\ \searrow\ \swarrow\ \nwarrow $$
+符号 $$ \surd\ \barwedge\ \veebar\ \odot\ \oplus\ \otimes\ \oslash\ \circledcirc\ \boxdot\ \bigtriangleup $$
+$$ \bigtriangledown\ \dagger\ \diamond\ \star\ \triangleleft\ \triangleright\ \angle\ \infty\ \prime\ \triangle $$
+微积分学 $$ \int u \frac{dv}{dx},dx=uv-\int \frac{du}{dx}v,dx $$
+$$ f(x) = \int_{-\infty}^\infty \hat f(\xi),e^{2 \pi i \xi x} $$
+$$ \oint \vec{F} \cdot d\vec{s}=0 $$
+洛伦茨方程 $$ \begin{aligned} \dot{x} &amp; = \sigma(y-x) \ \dot{y} &amp; = \rho x - y - xz \ \dot{z} &amp; = -\beta z + xy \end{aligned} $$
+交叉乘积 这在KaTeX中是可行的，但在这种环境中馏分的分离不是很好。
+$$ \mathbf{V}_1 \times \mathbf{V}_2 = \begin{vmatrix} \mathbf{i} &amp; \mathbf{j} &amp; \mathbf{k} \ \frac{\partial X}{\partial u} &amp; \frac{\partial Y}{\partial u} &amp; 0 \ \frac{\partial X}{\partial v} &amp; \frac{\partial Y}{\partial v} &amp; 0 \end{vmatrix} $$
+这里有一个解决方案:使用“mfrac”类(在MathJax情况下没有区别)的额外类使分数更小:
+$$ \mathbf{V}_1 \times \mathbf{V}_2 = \begin{vmatrix} \mathbf{i} &amp; \mathbf{j} &amp; \mathbf{k} \ \frac{\partial X}{\partial u} &amp; \frac{\partial Y}{\partial u} &amp; 0 \ \frac{\partial X}{\partial v} &amp; \frac{\partial Y}{\partial v} &amp; 0 \end{vmatrix} $$
+强调 $$ \hat{x}\ \vec{x}\ \ddot{x} $$
+有弹性的括号 $$ \left(\frac{x^2}{y^3}\right) $$
+评估范围 $$ \left.\frac{x^3}{3}\right|_0^1 $$
+诊断标准 $$ f(n) = \begin{cases} \frac{n}{2}, &amp; \text{if } n\text{ is even} \ 3n+1, &amp; \text{if } n\text{ is odd} \end{cases} $$
+麦克斯韦方程组 $$ \begin{aligned} \nabla \times \vec{\mathbf{B}} -, \frac1c, \frac{\partial\vec{\mathbf{E}}}{\partial t} &amp; = \frac{4\pi}{c}\vec{\mathbf{j}} \ \nabla \cdot \vec{\mathbf{E}} &amp; = 4 \pi \rho \ \nabla \times \vec{\mathbf{E}}, +, \frac1c, \frac{\partial\vec{\mathbf{B}}}{\partial t} &amp; = \vec{\mathbf{0}} \ \nabla \cdot \vec{\mathbf{B}} &amp; = 0 \end{aligned} $$
+这些方程式很狭窄。我们可以使用(例如)添加垂直间距 [1em] 在每个换行符(\)之后。正如你在这里看到的：
+$$ \begin{aligned} \nabla \times \vec{\mathbf{B}} -, \frac1c, \frac{\partial\vec{\mathbf{E}}}{\partial t} &amp; = \frac{4\pi}{c}\vec{\mathbf{j}} \[1em] \nabla \cdot \vec{\mathbf{E}} &amp; = 4 \pi \rho \[0.5em] \nabla \times \vec{\mathbf{E}}, +, \frac1c, \frac{\partial\vec{\mathbf{B}}}{\partial t} &amp; = \vec{\mathbf{0}} \[1em] \nabla \cdot \vec{\mathbf{B}} &amp; = 0 \end{aligned} $$
+统计学 固定词组：
+$$ \frac{n!}{k!(n-k)!} = {^n}C_k {n \choose k} $$
+分数在分数 $$ \frac{\frac{1}{x}+\frac{1}{y}}{y-z} $$
+ｎ次方根 $$ \sqrt[n]{1+x+x^2+x^3+\ldots} $$
+矩阵 $$ \begin{pmatrix} a_{11} &amp; a_{12} &amp; a_{13}\ a_{21} &amp; a_{22} &amp; a_{23}\ a_{31} &amp; a_{32} &amp; a_{33} \end{pmatrix} \begin{bmatrix} 0 &amp; \cdots &amp; 0 \ \vdots &amp; \ddots &amp; \vdots \ 0 &amp; \cdots &amp; 0 \end{bmatrix} $$
+标点符号 $$ f(x) = \sqrt{1+x} \quad (x \ge -1) f(x) \sim x^2 \quad (x\to\infty) $$
+现在用标点符号:
+$$ f(x) = \sqrt{1+x}, \quad x \ge -1 f(x) \sim x^2, \quad x\to\infty $$</content></entry><entry><title>关于我</title><url>https://hyouka.top/about.html</url><categories/><tags/><content type="html"> Hugo是用Go编写的一个开放源代码静态站点生成器，可在Apache许可证2.0
+下使用。 Hugo支持TOML, YAML和JSON数据文件类型，Markdown和HTML内容文件，并使用短代码添加丰富的内容。其他值得注意的功能包括分类法、多语言模式、图像处理、自定义输出格式、HTML/CSS/JS缩小和对Sass SCSS工作流的支持。
+Hugo使用了多种开源项目，包括:
+https://github.com/yuin/goldmark
+https://github.com/alecthomas/chroma
+https://github.com/muesli/smartcrop
+https://github.com/spf13/cobra
+https://github.com/spf13/viper
+Hugo是博客、企业网站、创意作品集、在线杂志、单页应用程序甚至是数千页的网站的理想选择。
+Hugo适合那些想要手工编写自己的网站代码，而不用担心设置复杂的运行时、依赖关系和数据库的人。
+使用Hugo建立的网站非常快速、安全，可以部署在任何地方。
+更多信息请访问GitHub
+.</content></entry></search>
